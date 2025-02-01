@@ -1,5 +1,6 @@
-const errorHandler = (err, req, res) => {
-  console.log(err);
+const { StatusCodes } = require("http-status-codes");
+
+const errorHandler = (err, req, res,next) => {
   let customError = {
     message: err.message || "Internal Server Error",
     statusCode: err.statusCode || 500,
@@ -24,3 +25,5 @@ const errorHandler = (err, req, res) => {
 
   res.status(customError.statusCode).json({ msg: customError.message });
 };
+
+module.exports = errorHandler;

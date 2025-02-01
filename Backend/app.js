@@ -6,7 +6,19 @@ const connectDB = require("./src/config/connectDB");
 const mongoUrl = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
+const errorHandler = require("./src/middlewares/error-handler");
+const notFound = require("./src/middlewares/notFound");
+
 const app = express();
+
+const authRouter = require("./src/routes/authRoute");
+
+app.use(express.json());
+
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandler);
+app.use(notFound);
 
 const main = async () => {
   try {
