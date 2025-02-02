@@ -13,7 +13,7 @@ const authController = async (req, res) => {
     address,
     state_name,
   } = req.body;
-  let user = await User.findOne({ hidn });
+  let user = await User.findOne({ hid }); 
   if (!user) {
     user = await User.create({
       hidn,
@@ -28,6 +28,7 @@ const authController = async (req, res) => {
       address,
       state_name,
     });
+    console.log("New User created");
   }
 
   const token = user.createAccessToken();
