@@ -12,10 +12,12 @@ const notFound = require("./src/middlewares/notFound");
 const app = express();
 
 const authRouter = require("./src/routes/authRoute");
+const hospitalRouter = require("./src/routes/hospitalRoute");
 
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/hospitals", hospitalRouter);
 
 app.use(errorHandler);
 app.use(notFound);

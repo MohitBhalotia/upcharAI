@@ -1,5 +1,5 @@
 const User = require("../models/UserModel");
-const authController = async (req, res) => {
+const loginWithQr = async (req, res) => {
   const {
     hidn,
     hid,
@@ -13,7 +13,7 @@ const authController = async (req, res) => {
     address,
     state_name,
   } = req.body;
-  let user = await User.findOne({ hid }); 
+  let user = await User.findOne({ hid });
   if (!user) {
     user = await User.create({
       hidn,
@@ -35,4 +35,4 @@ const authController = async (req, res) => {
   res.status(201).json({ token, msg: "Login successfull" });
 };
 
-module.exports = authController;
+module.exports = loginWithQr;

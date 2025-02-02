@@ -20,7 +20,8 @@ const hospitalSchema = mongoose.Schema({
     type: String,
   },
   coordinates: {
-    type: String,
+    type: [Number],
+    index:"2dsphere"
   },
   discipline: {
     type: String,
