@@ -14,12 +14,14 @@ const app = express();
 const authRouter = require("./src/routes/authRoute");
 const hospitalRouter = require("./src/routes/hospitalRoute");
 const dispensaryRouter = require("./src/routes/dispensaryRoute");
+const userRouter = require("./src/routes/userRoute");
 
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/hospitals", hospitalRouter);
 app.use("/api/v1/medicines", dispensaryRouter);
+app.use("/api/v1/user", userRouter);
 
 app.use(errorHandler);
 app.use(notFound);

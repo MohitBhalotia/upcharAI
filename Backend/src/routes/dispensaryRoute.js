@@ -1,6 +1,5 @@
 const express = require("express");
 const {getMedicines,buyMedicine} = require("../controllers/medicineConroller");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
