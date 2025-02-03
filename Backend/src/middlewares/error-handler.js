@@ -1,6 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
 
 const errorHandler = (err, req, res,next) => {
+  console.log(err);
+  
   let customError = {
     message: err.message || "Internal Server Error",
     statusCode: err.statusCode || 500,

@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Medicine = require("../models/medicineModel");
 const User = require("../models/UserModel");
+const jwt = require("jsonwebtoken");
 
 const getMedicines = async (req, res) => {
   const medicines = await Medicine.find();
@@ -9,11 +10,21 @@ const getMedicines = async (req, res) => {
 };
 
 const buyMedicine = async (req, res) => {
-  const { cart,userId } = req.body;
+  const { cart, userId } = req.body;
 
-  let user=null;
+  let user = null;
   if (userId) {
-    user = await User.findById(userId);
+    const foundUser = await User.findById(userId);
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { userIdFromToken: payload.userId };
+    const { userIdFromToken } = req.user;
+
+    if (foundUser._id.toString("hex") === userIdFromToken) {
+      user = foundUser;
+    } else {
+      throw new BadRequestError("User Id error");
+    }
   }
 
   if (!cart || cart.length === 0) {
