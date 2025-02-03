@@ -7,7 +7,7 @@ import SOS from "./pages/SOS";
 import Login from "./pages/Login";
 import FirstAid from "./pages/FirstAid";
 import Abha from "./pages/Abha";
-
+import ChatComponent from './components/ChatComponent'
 const App = () => {
   return (
     <div>
@@ -19,6 +19,7 @@ const App = () => {
         <Route path={"/login"} element={<Login />} />
         <Route path={"/first-aid"} element={<FirstAid />} />
         <Route path={"/abha"} element={<Abha />} />
+        <Route path={"/query-bot"} element={<ChatComponent />} />
       </Routes>
     </div>
   );
