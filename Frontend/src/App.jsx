@@ -7,7 +7,11 @@ import SOS from "./pages/SOS";
 import Login from "./pages/Login";
 import FirstAid from "./pages/FirstAid";
 import Abha from "./pages/Abha";
-import ChatComponent from './components/ChatComponent'
+import ChatComponent from "./components/ChatComponent";
+import LoginQr from "./pages/LoginQr";
+import Dashboard from "./pages/Dashboard";
+import AiCheckup from "./pages/AiCheckup";
+import DoctorAppointment from "./pages/DoctorAppointment";
 const App = () => {
   return (
     <div>
@@ -20,6 +24,10 @@ const App = () => {
         <Route path={"/first-aid"} element={<FirstAid />} />
         <Route path={"/abha"} element={<Abha />} />
         <Route path={"/query-bot"} element={<ChatComponent />} />
+        <Route path={"/login-qr"} element={<LoginQr />} />
+        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"/ai-checkup"} element={<AiCheckup />} />
+        <Route path={"/doctor-appointment"} element={<DoctorAppointment />} />
       </Routes>
     </div>
   );

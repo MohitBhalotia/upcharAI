@@ -1,10 +1,8 @@
 import React from "react";
 
-const Button = ({ label, className }) => {
+const Button = ({ label, className, ...props }) => {
   return (
-    <button
-      className={` shadow-md  ${className}`}
-    >
+    <button className={` shadow-md  ${className}`} {...props}>
       {label}
     </button>
   );
