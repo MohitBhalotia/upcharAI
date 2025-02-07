@@ -1,17 +1,16 @@
 import React from 'react';
 
 const MedicineCard = ({medicine}) => {
-  const { _id, name, image, price, subsidized_price, quantity }=medicine
+  const { name, image, price, subsidized_price, quantity }=medicine
   return (
-    <div className="max-w-sm rounded-lg border border-gray-200 shadow-md overflow-hidden">
+    <div className="max-w-sm rounded-lg border bg-white border-gray-200 shadow-md overflow-hidden">
       {/* Image Section */}
-      <img src={image} alt={name} className="w-full h-48 object-cover" />
+      <img src={image} alt={name} className="w-full h-48 object-contain" />
 
       {/* Card Content */}
       <div className="p-4">
         {/* Medicine Name */}
         <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
-        <p className="text-sm text-gray-500 mt-1">Product ID: {_id}</p>
 
         {/* Price and Subsidized Price */}
         <div className="mt-4">
