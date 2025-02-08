@@ -5,9 +5,19 @@ const User = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
 
 const getMedicines = async (req, res) => {
-  const medicines = await Medicine.find();
+  const { userId } = req.body;  // Destructure userId from request body
+  let medicines = await Medicine.find();
+
+  // If userId is not provided, remove subsidized_price from each medicine
+  if (!userId) {
+    medicines = medicines.map(medicine => {
+      const { subsidized_price, ...medicineWithoutSubsidy } = medicine.toObject();
+      return medicineWithoutSubsidy;
+    });
+  }
   res.status(StatusCodes.OK).json({ medicines });
 };
+
 
 const buyMedicine = async (req, res) => {
   const { cart, userId } = req.body;
@@ -19,7 +29,6 @@ const buyMedicine = async (req, res) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = { userIdFromToken: payload.userId };
     const { userIdFromToken } = req.user;
-
     if (foundUser._id.toString("hex") === userIdFromToken) {
       user = foundUser;
     } else {

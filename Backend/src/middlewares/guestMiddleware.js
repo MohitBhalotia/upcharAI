@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { v4: uuidv4 } = require("uuid"); // Use uuid for generating a unique guest ID
 const adminId = process.env.ADMIN_ID;
 
 const guestMiddleware = (req, res, next) => {

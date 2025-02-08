@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import AiCheckup from "./pages/AiCheckup";
 import DoctorAppointment from "./pages/DoctorAppointment";
 import Cart from "./pages/Cart";
+import Symptoms from "./pages/Symptoms";
 const App = () => {
   return (
     <div>
@@ -30,6 +31,7 @@ const App = () => {
         <Route path={"/ai-checkup"} element={<AiCheckup />} />
         <Route path={"/doctor-appointment"} element={<DoctorAppointment />} />
         <Route path={"/cart"} element={<Cart />} />
+        <Route path={"/through-symptoms"} element={<Symptoms />} />
       </Routes>
     </div>
   );

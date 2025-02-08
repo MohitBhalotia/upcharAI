@@ -9,7 +9,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
 export const getMedicines = createAsyncThunk("medi/getMedicines", async () => {
   try {
-    const medi = await axios.get(`${backendUrl}/medicines/get-medicines`);
+    const medi = await axios.post(`${backendUrl}/medicines/get-medicines`);
     return medi.data.medicines;
   } catch (error) {
     console.log(error);
