@@ -54,11 +54,7 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.pre("save", async function () {
-  if (!this.isModified("hidn")) return; // Prevent rehashing on update
-  const salt = await bcrypt.genSalt(10);
-  this.hidn = await bcrypt.hash(this.hidn, salt);
-});
+
 
 UserSchema.methods.createAccessToken = function () {
   const token = jwt.sign(

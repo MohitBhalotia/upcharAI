@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "./ui/Button";
+import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import CartIcon from "./CartIcon";
 
 const Navbar = () => {
   return (
@@ -18,12 +20,16 @@ const Navbar = () => {
           </p>
         </div>
       </header>
-      <Button
-        className={
-          "absolute top-6 right-8 px-10 py-4 rounded-3xl text-white bg-red-600"
-        }
-        label={"SOS"}
-      ></Button>
+      <div className="flex gap-10 items-center absolute top-6 right-8">
+        <CgProfile className=" text-3xl" />
+        <Link to={"/cart"}>
+          <CartIcon />
+        </Link>
+        <Button
+          className={"text-white bg-red-600 px-10 py-4 rounded-3xl"}
+          label={"SOS"}
+        ></Button>
+      </div>
     </div>
   );
 };

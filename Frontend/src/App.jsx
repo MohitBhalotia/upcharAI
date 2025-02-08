@@ -12,6 +12,7 @@ import LoginQr from "./pages/LoginQr";
 import Dashboard from "./pages/Dashboard";
 import AiCheckup from "./pages/AiCheckup";
 import DoctorAppointment from "./pages/DoctorAppointment";
+import Cart from "./pages/Cart";
 const App = () => {
   return (
     <div>
@@ -28,6 +29,7 @@ const App = () => {
         <Route path={"/dashboard"} element={<Dashboard />} />
         <Route path={"/ai-checkup"} element={<AiCheckup />} />
         <Route path={"/doctor-appointment"} element={<DoctorAppointment />} />
+        <Route path={"/cart"} element={<Cart />} />
       </Routes>
     </div>
   );

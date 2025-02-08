@@ -17,6 +17,7 @@
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "uuid": "^11.0.5"
   }
 }
