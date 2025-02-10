@@ -41,7 +41,7 @@ const routes = [
     ),
   },
   {
-    path: "/login-qr",
+    path: "/login/login-qr",
     element: (
       <PublicRoute>
         <LoginQr />

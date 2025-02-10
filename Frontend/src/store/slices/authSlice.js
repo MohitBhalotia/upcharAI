@@ -1,63 +1,115 @@
-// src/store/slices/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // Import jwt-decode
+import { jwtDecode } from "jwt-decode"; // Import JWT decode library
 
 const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
-// Define the initial state
-const initialState = {
-  token: null,
-  userId: null, // Store the user ID extracted from JWT
-  error: null,
-  loading: false,
-};
+// Load auth state from localStorage
+const storedToken = localStorage.getItem("token") || null;
+const storedUserId = storedToken ? jwtDecode(storedToken).userId : null; // Decode userId from token
 
-// Create the async thunk for handling login via QR code
-export const loginWithQR = createAsyncThunk(
-  "auth/loginWithQR",
-  async (data, { rejectWithValue }) => {
+// Login with QR Code
+export const loginWithQr = createAsyncThunk(
+  "auth/loginWithQr",
+  async (qrCodeData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${backendUrl}/auth/login-qr`, data);
-      return response.data; // Return the response payload
+      console.log(qrCodeData);
+
+      const response = await axios.post(
+        `${backendUrl}/auth/login-qr`,
+        qrCodeData
+      );
+
+      const token = response.data.token;
+      const decodedToken = jwtDecode(token); // Decode JWT to extract userId
+      const userId = decodedToken.userId;
+
+      // Save userId and token to localStorage
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("token", token);
+
+      return { userId, token };
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.msg ||
-          error.message ||
-          "Error sending data to backend"
-      ); // Ensure proper error handling
+      return rejectWithValue(error.response?.data?.msg || "QR login failed");
     }
   }
 );
 
-// Create the authSlice using createSlice
+// Fetch user details
+export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().auth.token || localStorage.getItem("token");
+      if (!token) return rejectWithValue("Token not found");
+
+      const response = await axios.get(`${backendUrl}/user/get-user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return response.data.user;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.msg || "Failed to fetch user"
+      );
+    }
+  }
+);
+
+const initialState = {
+  user: null,
+  userId: storedUserId,
+  token: storedToken,
+  loading: false,
+  error: null,
+};
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {}, // No additional reducers for now
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.userId = null;
+      state.token = null;
+
+      // Clear localStorage
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loginWithQR.pending, (state) => {
-        state.loading = true; // Start loading
-        state.error = null; // Reset error
+      // Handle loginWithQr
+      .addCase(loginWithQr.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(loginWithQR.fulfilled, (state, action) => {
-        state.loading = false; // Stop loading
-        state.token = action.payload.token; // Save token
-        // Decode JWT and extract userId
-        try {
-          const decodedToken = jwtDecode(action.payload.token);
-          state.userId = decodedToken.userId; // Assuming "userId" is a field in your JWT payload
-        } catch (error) {
-          console.error("Error decoding JWT:", error);
-          state.error = "Invalid token received";
-        }
+      .addCase(loginWithQr.fulfilled, (state, action) => {
+        state.userId = action.payload.userId;
+        state.token = action.payload.token;
+        state.loading = false;
       })
-      .addCase(loginWithQR.rejected, (state, action) => {
-        state.loading = false; // Stop loading
-        state.error = action.payload || "Something went wrong"; // Store error as string
+      .addCase(loginWithQr.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Handle getUser
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

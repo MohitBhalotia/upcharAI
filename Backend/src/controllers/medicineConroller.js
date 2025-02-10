@@ -2,38 +2,32 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Medicine = require("../models/medicineModel");
 const User = require("../models/UserModel");
-const jwt = require("jsonwebtoken");
 
 const getMedicines = async (req, res) => {
-  const { userId } = req.body;  // Destructure userId from request body
+  const { userId } = req.query; // Destructure userId from request body
   let medicines = await Medicine.find();
 
   // If userId is not provided, remove subsidized_price from each medicine
-  if (!userId) {
-    medicines = medicines.map(medicine => {
-      const { subsidized_price, ...medicineWithoutSubsidy } = medicine.toObject();
+
+  if (userId === process.env.ADMIN_ID) {
+    medicines = medicines.map((medicine) => {
+      const { subsidized_price, ...medicineWithoutSubsidy } =
+        medicine.toObject();
       return medicineWithoutSubsidy;
     });
   }
   res.status(StatusCodes.OK).json({ medicines });
 };
 
-
 const buyMedicine = async (req, res) => {
   const { cart, userId } = req.body;
+  if (!userId) {
+    throw new BadRequestError("User Id is required");
+  }
+  let user = (await User.findById(userId)) ;
 
-  let user = null;
-  if (userId) {
-    const foundUser = await User.findById(userId);
-    const token = req.headers.authorization.split(" ")[1];
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userIdFromToken: payload.userId };
-    const { userIdFromToken } = req.user;
-    if (foundUser._id.toString("hex") === userIdFromToken) {
-      user = foundUser;
-    } else {
-      throw new BadRequestError("User Id error");
-    }
+  if (!userId) {
+    throw new NotFoundError("User not required");
   }
 
   if (!cart || cart.length === 0) {
@@ -65,9 +59,11 @@ const buyMedicine = async (req, res) => {
     }
 
     // Calculate cost for the full cart
-    const medicine_cost = user
-      ? medicine.subsidized_price * quantity
-      : medicine.price * quantity;
+
+    const medicine_cost =
+      user._id.toString() !== process.env.ADMIN_ID
+        ? medicine.subsidized_price * quantity
+        : medicine.price * quantity;
     totalBill += medicine_cost;
 
     // Store medicine details

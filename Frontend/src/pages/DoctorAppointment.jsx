@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import axios from "axios";
 import HospitalCard from "../components/HospitalCard";
+import { useSelector } from "react-redux";
 
 const DoctorAppointment = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
@@ -24,11 +25,13 @@ const DoctorAppointment = () => {
       alert("Geolocation is not supported by your browser.");
     }
   };
+  const token = useSelector((state) => state.auth.token);
 
   const sendToBackend = async (latitude, longitude) => {
     try {
       const res = await axios.get(
-        `${backendUrl}/hospitals/get-nearby-hospitals?latitude=${latitude}&longitude=${longitude}`
+        `${backendUrl}/hospitals/get-nearby-hospitals?latitude=${latitude}&longitude=${longitude}`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setHospitals(res.data.hospitals);
     } catch (error) {
@@ -43,7 +46,11 @@ const DoctorAppointment = () => {
           Find Nearby Doctors
         </h1>
         <div className="flex justify-center">
-          <Button onClick={getLocation} className="bg-[#01C38E] px-10 py-4 rounded-[8px] text-white font-semibold" label={"Locate"} />
+          <Button
+            onClick={getLocation}
+            className="bg-[#01C38E] px-10 py-4 rounded-[8px] text-white font-semibold"
+            label={"Locate"}
+          />
         </div>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12">
           {hospitals.length > 0 ? (
@@ -51,7 +58,9 @@ const DoctorAppointment = () => {
               <HospitalCard key={hospital._id} hospital={hospital} />
             ))
           ) : (
-            <p className="text-center text-gray-500 col-span-2">No hospitals found.</p>
+            <p className="text-center text-gray-500 col-span-2">
+              No hospitals found.
+            </p>
           )}
         </div>
       </div>

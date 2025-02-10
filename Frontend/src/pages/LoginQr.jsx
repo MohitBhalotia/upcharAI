@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import QrScanner from "qr-scanner"; // Import qr-scanner
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginWithQR } from "../store/slices/authSlice";
+import { loginWithQr } from "../store/slices/authSlice";
 import scan1 from "../assets/scan1.svg";
 import scan2 from "../assets/scan2.svg";
 
@@ -46,7 +46,7 @@ const LoginQr = () => {
 
     try {
       const data = JSON.parse(result.data); // Access scanned QR code data
-      dispatch(loginWithQR(data)); // Dispatch login action
+      dispatch(loginWithQr(data)); // Dispatch login action
     } catch (error) {
       console.error("Invalid QR Code Data:", error);
     }

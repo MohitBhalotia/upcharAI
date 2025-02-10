@@ -16,7 +16,6 @@ app.use(cors());
 const authRouter = require("./src/routes/authRoute");
 const hospitalRouter = require("./src/routes/hospitalRoute");
 const dispensaryRouter = require("./src/routes/dispensaryRoute");
-const userRouter = require("./src/routes/userRoute");
 const cartRouter = require("./src/routes/cartRoute");
 
 app.use(express.json());
@@ -24,7 +23,6 @@ app.use(express.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/hospitals", hospitalRouter);
 app.use("/api/v1/medicines", dispensaryRouter);
-app.use("/api/v1/user", userRouter);
 app.use("/api/v1/cart", cartRouter);
 
 app.use(errorHandler);

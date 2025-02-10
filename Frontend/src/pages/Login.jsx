@@ -8,8 +8,8 @@ const Login = () => {
   const [hovered, setHovered] = useState(null);
 
   const buttons = [
-    { path: "/login-qr", label: "Scan Ayushmaan Card", icon: "scan" },
-    { path: "/login-number", label: "Enter ABHA Number", icon: "pin" },
+    { path: "login-qr", label: "Scan Ayushmaan Card", icon: "scan" },
+    { path: "login-number", label: "Enter ABHA Number", icon: "pin" },
   ];
 
   const handleClick = (btn) => {

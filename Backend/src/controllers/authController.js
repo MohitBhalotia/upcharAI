@@ -1,4 +1,7 @@
 const User = require("../models/UserModel");
+const { NotFoundError } = require("../errors");
+const { StatusCodes } = require("http-status-codes");
+
 const loginWithQr = async (req, res) => {
   const {
     hidn,
@@ -32,7 +35,16 @@ const loginWithQr = async (req, res) => {
   }
 
   const token = user.createAccessToken();
-  res.status(201).json({ token, msg: "Login successfull" });
+  res.status(StatusCodes.CREATED).json({ token, msg: "Login successfull" });
 };
 
-module.exports = loginWithQr;
+const getUser = async (req, res) => {
+  const { userId } = req.user;
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+  res.status(StatusCodes.OK).json({ user });
+};
+
+module.exports = { loginWithQr, getUser };

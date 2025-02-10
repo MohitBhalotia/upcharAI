@@ -1,39 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { getCart } from "../store/slices/cartSlice";
+import { getCart, addToCart } from "../store/slices/cartSlice";
 
 const MedicineCard = ({ medicine }) => {
   const { _id, name, image, price, subsidized_price, quantity, description } =
     medicine;
   const dispatch = useDispatch();
-  const backendUrl = import.meta.env.VITE_BACKEND_URI;
   const [cartQuantity, setCartQuantity] = useState(1); // Track selected quantity
-  let userId = useSelector((state) => state.auth.userId);
+  const userId = useSelector((state) => state.auth.userId);
+  const cartLoading = useSelector((state) => state.cart.loading);
 
-  const addToCart = async (medicineId) => {
+  const addCart = async () => {
+    if (quantity === 0) {
+      alert("This medicine is out of stock.");
+      return;
+    }
+
     const cartItem = {
-      medicineId,
+      medicineId: _id,
       quantity: cartQuantity,
     };
 
     try {
-      const response = await axios.post(`${backendUrl}/cart/add-to-cart`, {
-        userId: userId ? userId : import.meta.env.VITE_ADMIN_ID,
-        cart: [cartItem],
-      });
-
-      if (response.status === 201) {
-        alert(response.data.msg);
-        dispatch(getCart());
-      } else {
-        throw new Error("Unexpected response from server");
-      }
+      dispatch(addToCart(cartItem));
+      alert("Item added to cart!");
     } catch (error) {
-      console.error(
-        "Error adding to cart:",
-        error.response?.data || error.message
-      );
+      console.error("Error adding to cart:", error);
       alert("Failed to add medicine to cart.");
     }
   };
@@ -69,7 +61,7 @@ const MedicineCard = ({ medicine }) => {
         </p>
 
         <div className="mt-4">
-          <span className="font-bold text-gray-600 ">Description: </span>
+          <span className="font-bold text-gray-600">Description: </span>
           <span className="line-clamp-2">{description}</span>
         </div>
 
@@ -78,6 +70,7 @@ const MedicineCard = ({ medicine }) => {
           <button
             className="bg-gray-200 px-2 py-1 rounded-l-md"
             onClick={() => setCartQuantity(Math.max(cartQuantity - 1, 1))}
+            disabled={cartQuantity <= 1}
           >
             -
           </button>
@@ -98,6 +91,7 @@ const MedicineCard = ({ medicine }) => {
             onClick={() =>
               setCartQuantity(Math.min(cartQuantity + 1, quantity))
             }
+            disabled={cartQuantity >= quantity}
           >
             +
           </button>
@@ -106,10 +100,15 @@ const MedicineCard = ({ medicine }) => {
         {/* Action Button */}
         <div className="mt-4 flex justify-end">
           <button
-            onClick={() => addToCart(_id)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            onClick={addCart}
+            className={`px-4 py-2 rounded-lg text-white ${
+              quantity === 0
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+            disabled={quantity === 0 || cartLoading}
           >
-            Add to Cart
+            {cartLoading ? "Adding..." : "Add to Cart"}
           </button>
         </div>
       </div>

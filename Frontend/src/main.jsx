@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import routes from "./routes/Routes.jsx";
-import ScrollToTop from './pages/ScrollToTop.jsx'
+import ScrollToTop from "./pages/ScrollToTop.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,9 +23,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router}></RouterProvider>
+  </Provider>
 );
