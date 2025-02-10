@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./ui/Button";
 import CartIcon from "./CartIcon";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/slices/authSlice"; // Adjust the path as per your project structure
 
@@ -9,9 +9,11 @@ const Navbar = () => {
   const location = useLocation();
   const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
