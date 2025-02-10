@@ -9,7 +9,7 @@ export default function Protected({ children, authentication = true }) {
 
   useEffect(() => {
     if (authentication && !userId) {
-      navigate("/login");
+      navigate("/");
     } else if (!authentication && userId) {
       navigate("/dashboard");
     }
