@@ -7,12 +7,12 @@ const AiCheckup = () => {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-sm flex flex-col gap-8 ">
         <Button
-          onClick={() => navigate("/through-image")}
+          onClick={() => navigate("/ai-checkup/via-image")}
           label="Through image"
           className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
         />
         <Button
-          onClick={() => navigate("/through-symptoms")}
+          onClick={() => navigate("/ai-checkup/via-symptoms")}
           label="Through symptoms"
           className="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300"
         />

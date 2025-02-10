@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getCart } from "../store/slices/cartSlice";
 import { getMedicines } from "../store/slices/mediSlice";
 import { useSelector, useDispatch } from "react-redux"; // Assuming you're using Redux to store the medicines
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState([]); // Default to empty array
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const userId = useSelector((state) => state.auth.userId);
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
-
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const loading = useSelector((state) => state.cart.loading);
   const dispatch = useDispatch();
 
   const getCartAmount = () => {
@@ -18,32 +18,20 @@ const CartPage = () => {
       let itemInfo = medicines.find(
         (medicine) => medicine._id === item.medicineId
       );
-      totalAmount += itemInfo.price * item.quantity;
+      totalAmount +=
+        (userId ? itemInfo.subsidized_price : itemInfo.price) * item.quantity;
     }
     return totalAmount;
   };
 
   // Fetch cart items when the component mounts
-  const fetchCart = async () => {
-    try {
-      const response = await axios.get(`${backendUrl}/cart/get-cart`);
-      const fetchedCart = response.data.cart || []; // Ensure it's an array
-      setCartItems(fetchedCart);
-      setLoading(false); // Set loading to false once data is fetched
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-      setLoading(false); // Handle the loading state even if the fetch fails
-    }
-  };
-  useEffect(() => {
-    fetchCart();
-  }, []);
 
   useEffect(() => {
-    const fetchMedicines = async () => {
-      dispatch(getMedicines());
-    };
-    fetchMedicines();
+    dispatch(getCart());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getMedicines());
   }, [dispatch]);
 
   const medicines = useSelector((state) => state.med.medicines); // Assuming the medicines are stored in the Redux store
@@ -55,7 +43,7 @@ const CartPage = () => {
         medicineId,
         quantity,
       });
-      fetchCart();
+      dispatch(getCart());
     } catch (error) {
       console.error("Error updating cart quantity:", error);
     }
@@ -65,7 +53,7 @@ const CartPage = () => {
   const removeItem = async (medicineId) => {
     try {
       await axios.delete(`${backendUrl}/cart/remove-from-cart/${medicineId}`);
-      fetchCart();
+      dispatch(getCart());
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
@@ -110,7 +98,9 @@ const CartPage = () => {
                   <h3 className="text-xl font-semibold text-gray-800">
                     {medicine?.name}
                   </h3>
-                  <p className="text-gray-600">₹{medicine?.price} each</p>
+                  <p className="text-gray-600">
+                    ₹{userId ? medicine.subsidized_price : medicine?.price} each
+                  </p>
                 </div>
 
                 {/* Quantity Controls */}
@@ -153,7 +143,10 @@ const CartPage = () => {
                 </div>
 
                 <div className="ml-4 text-gray-800 font-semibold">
-                  ₹{medicine?.price * item.quantity}
+                  ₹
+                  {userId
+                    ? medicine.subsidized_price * item.quantity
+                    : medicine?.price * item.quantity}
                 </div>
 
                 {/* Remove Item Button */}

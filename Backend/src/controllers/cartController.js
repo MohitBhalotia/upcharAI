@@ -47,7 +47,7 @@ const addToCart = async (req, res) => {
 
 // Get the user's cart (for logged-in users)
 const getCart = async (req, res) => {
-  const { userId } = req.user;
+  const { userId } = req.params;
 
   if (!userId) {
     throw new BadRequestError("UserId is required to fetch the cart");
@@ -61,8 +61,8 @@ const getCart = async (req, res) => {
 
     if (!cart) {
       return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ msg: "Cart not found for this user" });
+        .status(StatusCodes.OK)
+        .json({ msg: "Your cart is empty" });
     }
   }
   // Return the cart data

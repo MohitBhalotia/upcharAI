@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { getCart } from "../store/slices/cartSlice";
 
 const MedicineCard = ({ medicine }) => {
-  const { _id, name, image, price, subsidized_price, quantity } = medicine;
+  const { _id, name, image, price, subsidized_price, quantity, description } =
+    medicine;
+  const dispatch = useDispatch();
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
   const [cartQuantity, setCartQuantity] = useState(1); // Track selected quantity
+  let userId = useSelector((state) => state.auth.userId);
 
   const addToCart = async (medicineId) => {
     const cartItem = {
@@ -14,14 +19,21 @@ const MedicineCard = ({ medicine }) => {
 
     try {
       const response = await axios.post(`${backendUrl}/cart/add-to-cart`, {
+        userId: userId ? userId : import.meta.env.VITE_ADMIN_ID,
         cart: [cartItem],
       });
 
       if (response.status === 201) {
         alert(response.data.msg);
-      } else throw Error();
+        dispatch(getCart());
+      } else {
+        throw new Error("Unexpected response from server");
+      }
     } catch (error) {
-      console.log("Error adding to cart:", error);
+      console.error(
+        "Error adding to cart:",
+        error.response?.data || error.message
+      );
       alert("Failed to add medicine to cart.");
     }
   };
@@ -39,18 +51,27 @@ const MedicineCard = ({ medicine }) => {
         {/* Price and Subsidized Price */}
         <div className="mt-4">
           <p className="text-lg text-gray-700">
-            <span className="font-semibold">Price:</span> ₹{price}
-          </p>
-          <p className="text-lg text-gray-700">
-            <span className="font-semibold">Subsidized Price:</span> ₹
-            {subsidized_price}
+            <span className="font-semibold">Price:</span>
+            {userId ? (
+              <>
+                <span className="line-through text-red-500 mx-2">₹{price}</span>
+                <span className="text-green-600"> ₹{subsidized_price}</span>
+              </>
+            ) : (
+              <> ₹{price} </>
+            )}
           </p>
         </div>
 
         {/* Quantity Available */}
         <p className="mt-2 text-gray-600">
-          <span className="font-semibold">Available Quantity:</span> {quantity}
+          <span className="font-bold">Available Quantity:</span> {quantity}
         </p>
+
+        <div className="mt-4">
+          <span className="font-bold text-gray-600 ">Description: </span>
+          <span className="line-clamp-2">{description}</span>
+        </div>
 
         {/* Quantity Selector */}
         <div className="mt-4 flex items-center">
@@ -66,7 +87,9 @@ const MedicineCard = ({ medicine }) => {
             min="1"
             max={quantity}
             onChange={(e) =>
-              setCartQuantity(Math.min(e.target.value, quantity))
+              setCartQuantity(
+                Math.min(Math.max(Number(e.target.value), 1), quantity)
+              )
             }
             className="w-16 text-center border-gray-300 rounded-md"
           />

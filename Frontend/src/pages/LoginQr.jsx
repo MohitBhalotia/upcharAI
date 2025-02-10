@@ -1,41 +1,61 @@
 import React, { useState, useEffect, useRef } from "react";
 import QrScanner from "qr-scanner"; // Import qr-scanner
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loginWithQR } from "../store/slices/authSlice";
+
 const LoginQr = () => {
-  const [scanning, setScanning] = useState(false); // Control scanning state
-  const videoRef = useRef(null); // Ref for video element
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
+  const userId = useSelector((state) => state.auth.userId); // Moved outside of handleScan
+  const [scanning, setScanning] = useState(false);
+  const videoRef = useRef(null);
+  const scannerRef = useRef(null); // Store QR scanner instance
 
   useEffect(() => {
-    let qrScanner;
-
     if (scanning && videoRef.current) {
-      qrScanner = new QrScanner(videoRef.current, handleScan, {
-        highlightScanRegion: true, // Highlight scan area (optional)
-        highlightCodeOutline: true, // Highlight QR code outline (optional)
-      });
+      scannerRef.current = new QrScanner(
+        videoRef.current,
+        async (result) => {
+          handleScan(result);
+        },
+        {
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
+        }
+      );
 
-      qrScanner.start();
-
-      return () => qrScanner.stop(); // Clean up scanner on unmount
+      scannerRef.current.start();
     }
 
     return () => {
-      if (qrScanner) qrScanner.stop(); // Stop the scanner if not scanning
+      if (scannerRef.current) {
+        scannerRef.current.stop();
+        scannerRef.current = null; // Cleanup
+      }
     };
   }, [scanning]);
 
   // Function to handle QR code scan result
   const handleScan = async (result) => {
-    if (result) {
+    if (!result) return;
+
+    try {
       const data = JSON.parse(result.data); // Access scanned QR code data
-      dispatch(loginWithQR(data)); // Send data to backend
-      setScanning(false); // Stop scanning after successful scan
+      dispatch(loginWithQR(data)); // Dispatch login action
+    } catch (error) {
+      console.error("Invalid QR Code Data:", error);
     }
+    setScanning(false); // Stop scanning after successful scan
   };
 
-  // Function to send scanned data to the backend
+  // Redirect if logged in
+  useEffect(() => {
+    if (userId) {
+      navigate("/dashboard");
+    }
+  }, [userId, navigate]);
 
   return (
     <div className="bg-gray-900 min-h-screen flex justify-center items-center">
@@ -48,7 +68,7 @@ const LoginQr = () => {
         <div className="mb-6">
           {!scanning ? (
             <button
-              onClick={() => setScanning(true)} // Start scanning
+              onClick={() => setScanning(true)}
               className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
             >
               Scan QR Code
@@ -68,7 +88,7 @@ const LoginQr = () => {
         {scanning && (
           <div className="mt-4">
             <button
-              onClick={() => setScanning(false)} // Stop scanning
+              onClick={() => setScanning(false)}
               className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
             >
               Stop Scanning

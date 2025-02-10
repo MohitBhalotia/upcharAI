@@ -1,10 +1,13 @@
 import React from "react";
 import Button from "./ui/Button";
 import { CgProfile } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CartIcon from "./CartIcon";
-
+import { useSelector } from "react-redux";
 const Navbar = () => {
+  const userId = useSelector((state) => state.auth.userId);
+  const location = useLocation();
+
   return (
     <div>
       {/* Header Section */}
@@ -21,10 +24,12 @@ const Navbar = () => {
         </div>
       </header>
       <div className="flex gap-10 items-center absolute top-6 right-8">
-        <CgProfile className=" text-3xl" />
-        <Link to={"/cart"}>
-          <CartIcon />
-        </Link>
+        {userId ? <CgProfile className=" text-3xl" /> : null}
+        {location.pathname === "/dispensary" ? (
+          <Link to={"/cart"}>
+            <CartIcon />
+          </Link>
+        ) : null}
         <Button
           className={"text-white bg-red-600 px-10 py-4 rounded-3xl"}
           label={"SOS"}

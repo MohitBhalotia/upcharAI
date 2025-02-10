@@ -1,0 +1,363 @@
+    [
+        {
+            "name": "Sanitary Pads",
+            "image": "https://cdn11.bigcommerce.com/s-xyx0x9ybhg/images/stencil/1280x1280/products/311/8246/1__78994.1689600700.jpg?c=2",
+            "price": 50,
+            "subsidized_price": 35,
+            "quantity": 200,
+            "description": "Sanitary pads are absorbent materials worn to absorb menstrual flow."
+        },
+        {
+            "name": "Dettol + Cotton Roll",
+            "image": "https://images.apollo247.in/pub/media/catalog/product/D/E/DET0004_1-JULY23_1.jpg",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 120,
+            "description": "Dettol antiseptic is a disinfectant used to kill germs and prevent infection."
+        },
+        {
+            "name": "Paracetamol",
+            "image": "https://www.biofieldpharma.com/wp-content/uploads/2023/06/BIOFIELD-PYREGEM-TAB-1.png",
+            "price": 50,
+            "subsidized_price": 35,
+            "quantity": 100,
+            "description": "Used to relieve mild to moderate pain and reduce fever, commonly used for headaches, muscle aches, colds, and flu."
+        },
+        {
+            "name": "Dolo 650",
+            "image": "https://assets.truemeds.in/Images/ProductImage/TM-TACR1-011691/dolo-650-tablet-15_dolo-650-tablet-15--TM-TACR1-011691_1.png",
+            "price": 40,
+            "subsidized_price": 28,
+            "quantity": 60,
+            "description": "Commonly used for reducing fever and relieving pain associated with colds, viral infections, and body aches."
+        },
+        {
+            "name": "Amoxicillin",
+            "image": "https://5.imimg.com/data5/ANDROID/Default/2023/4/302037696/HU/JI/VN/116627000/product-jpeg-500x500.jpg",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 50,
+            "description": "An antibiotic used to treat bacterial infections such as pneumonia, throat infections, ear infections, and urinary tract infections."
+        },
+        {
+            "name": "Ibuprofen",
+            "image": "https://www.ashcroftpharmacy.co.uk/uploads/images/products/large/ashcroft-pharmacy-ibuprofen-400mg-tablets-24-tablets-1722352606Ibuprofen-400mg-Tablets.jpg",
+            "price": 60,
+            "subsidized_price": 42,
+            "quantity": 200,
+            "description": "A pain reliever and anti-inflammatory drug used for headaches, arthritis, muscle pain, and menstrual cramps."
+        },
+        {
+            "name": "Azithromycin",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2022/5/ZB/IV/SK/119015542/azithromycin-tablets-500mg-500x500.jpg",
+            "price": 180,
+            "subsidized_price": 126,
+            "quantity": 60,
+            "description": "An antibiotic used to treat bacterial infections such as bronchitis, pneumonia, sinus infections, and skin infections."
+        },
+        {
+            "name": "Pantoprazole",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMnb4yCfMA7R2Ma0HkLbWY__q3wMu-Jyq-Jw&s",
+            "price": 90,
+            "subsidized_price": 63,
+            "quantity": 80,
+            "description": "Used to treat acid reflux, GERD, and stomach ulcers by reducing stomach acid production."
+        },
+        {
+            "name": "Metformin",
+            "image": "https://www.xalmeds.com/cdn/shop/files/0825795E-955F-42CB-AEA9-7F10A0B26823_1e9a0996-f108-42ec-93a6-0ebebca2e94d_1500x.png?v=1720558944",
+            "price": 70,
+            "subsidized_price": 49,
+            "quantity": 120,
+            "description": "A medication used to control blood sugar levels in people with type 2 diabetes."
+        },
+        {
+            "name": "Losartan",
+            "image": "https://globelapharma.com/wp-content/uploads/2023/01/LOSARTAN.png",
+            "price": 250,
+            "subsidized_price": 175,
+            "quantity": 40,
+            "description": "Used to lower high blood pressure and reduce the risk of stroke in patients with heart disease."
+        },
+        {
+            "name": "Amlodipine",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2023/1/PZ/ZT/QK/88793954/amlodipine-tablets-ip-500x500.jpeg",
+            "price": 80,
+            "subsidized_price": 56,
+            "quantity": 150,
+            "description": "A calcium channel blocker used to treat high blood pressure and chest pain (angina)."
+        },
+        {
+            "name": "Cetirizine",
+            "image": "https://smarthealer.pk/wp-content/uploads/2024/09/cetirizine-tablet.webp",
+            "price": 40,
+            "subsidized_price": 28,
+            "quantity": 300,
+            "description": "An antihistamine used to relieve allergy symptoms such as runny nose, sneezing, and itchy eyes."
+        },
+        {
+            "name": "Condom",
+            "image": "https://rukminim2.flixcart.com/image/850/1000/xif0q/condom/k/9/h/-original-imahfhvkrtetq2t9.jpeg?q=20&crop=false",
+            "price": 80,
+            "subsidized_price": 54,
+            "quantity": 120,
+            "description": "A condom is a protective barrier used during sex to prevent pregnancy and STDs"
+        },
+        {
+            "name": "Clopidogrel",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2024/10/457286593/MW/EV/WB/19087144/clopidogrel-ip-75-mg.jpg",
+            "price": 300,
+            "subsidized_price": 210,
+            "quantity": 30,
+            "description": "Clopidogrel is an antiplatelet medication used to prevent heart attacks and strokes."
+        },
+        {
+            "name": "Lorazepam",
+            "image": "https://www.marketresearchintellect.com/images/blogs/lorazepam-tablets-the-rising-star-in-pharma-s-fight-against-anxiety-and-insomnia.webp",
+            "price": 120,
+            "subsidized_price": 84,
+            "quantity": 70,
+            "description": "Lorazepam is a benzodiazepine used to treat anxiety disorders and insomnia."
+        },
+        {
+            "name": "Ranitidine",
+            "image": "https://image.made-in-china.com/2f0j00OBjWADhPnfGr/Ranitidine-Hydrochloride-Injection-50mg-2ml-5AMPS-box-.webp",
+            "price": 70,
+            "subsidized_price": 49,
+            "quantity": 200,
+            "description": "Ranitidine is a medication that reduces stomach acid production, used for acid reflux and ulcers."
+        },
+        {
+            "name": "Levothyroxine",
+            "image": "https://images.apollo247.in/pub/media/catalog/product/L/E/LET0022_1_1.jpg?tr=q-80,f-webp,w-400,dpr-3,c-at_max%201200w",
+            "price": 200,
+            "subsidized_price": 140,
+            "quantity": 50,
+            "description": "Levothyroxine is a thyroid hormone replacement used to treat hypothyroidism."
+        },
+        {
+            "name": "Doxycycline",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYVj5LGXECR2XIZGKsBtaveMV-VqTji7V0Qg&s",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 60,
+            "description": "Doxycycline is an antibiotic used to treat bacterial infections, including acne and respiratory infections."
+        },
+        {
+            "name": "Salbutamol",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2024/9/454463216/LD/EC/KK/6276597/salbutamol-4-mg-tablet.jpg",
+            "price": 60,
+            "subsidized_price": 42,
+            "quantity": 100,
+            "description": "Salbutamol is a bronchodilator used to treat asthma and other breathing disorders."
+        },
+        {
+            "name": "Ondansetron",
+            "image": "https://www.morningsidepharm.com/wp-content/uploads/2020/04/Ondansetron.jpg",
+            "price": 80,
+            "subsidized_price": 56,
+            "quantity": 150,
+            "description": "Ondansetron is used to prevent nausea and vomiting caused by chemotherapy and surgery."
+        },
+        {
+            "name": "Prednisolone",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2022/11/ZR/BT/NA/31100217/prednisolone-tablets-ip.jpg",
+            "price": 100,
+            "subsidized_price": 70,
+            "quantity": 50,
+            "description": "Prednisolone is a corticosteroid used to treat inflammation, allergies, and autoimmune disorders."
+        },
+        {
+            "name": "Chloroquine",
+            "image": "https://nestoronline.in/product_image/images/CHANGE/Screenshot%202022-08-01%20123811.png",
+            "price": 70,
+            "subsidized_price": 49,
+            "quantity": 200,
+            "description": "Chloroquine is an antimalarial drug also used to treat autoimmune diseases like lupus."
+        },
+        {
+            "name": "Hydrochlorothiazide",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2024/3/399945731/LW/VF/DT/210259366/hydrazide-hydrochlorothiazide-tablets.jpg",
+            "price": 90,
+            "subsidized_price": 63,
+            "quantity": 180,
+            "description": "Hydrochlorothiazide is a diuretic used to treat high blood pressure and fluid retention."
+        },
+        {
+            "name": "Vitamin D3",
+            "image": "https://m.media-amazon.com/images/I/71RVHEJk-cL.jpg",
+            "price": 200,
+            "subsidized_price": 140,
+            "quantity": 90,
+            "description": "Supports bone health and immune function."
+        },
+        {
+            "name": "Atorvastatin",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2023/7/325710235/RG/XA/JU/74349057/atorvastatin-10-mg.jpg",
+            "price": 500,
+            "subsidized_price": 350,
+            "quantity": 40,
+            "description": "Lowers cholesterol and reduces heart disease risk."
+        },
+        {
+            "name": "Metoprolol",
+            "image": "https://www.saphnixlifecare.com/wp-content/uploads/2024/05/METONIX-50-ER.jpg",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 60,
+            "description": "Used to treat high blood pressure and chest pain."
+        },
+        {
+            "name": "Dexamethasone",
+            "image": "https://media.nature.com/lw1200/magazine-assets/d41586-020-01824-5/d41586-020-01824-5_18087906.jpg",
+            "price": 120,
+            "subsidized_price": 84,
+            "quantity": 50,
+            "description": "A corticosteroid used to reduce inflammation."
+        },
+        {
+            "name": "Furosemide",
+            "image": "https://www.careformulationlabs.com/uploaded_files/furosemide-40.jpg",
+            "price": 70,
+            "subsidized_price": 49,
+            "quantity": 80,
+            "description": "A diuretic used to treat fluid retention and high blood pressure."
+        },
+        {
+            "name": "Ciprofloxacin",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2023/2/GN/JX/WH/138308991/ciprofloxacin-hydrochloride-tablets-ip.jpg",
+            "price": 100,
+            "subsidized_price": 70,
+            "quantity": 100,
+            "description": "An antibiotic used to treat bacterial infections."
+        },
+        {
+            "name": "Gliclazide",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2023/12/369935318/XK/CU/TA/4168731/gliclize-30-mr.jpg",
+            "price": 180,
+            "subsidized_price": 126,
+            "quantity": 50,
+            "description": "Used to control blood sugar levels in type 2 diabetes."
+        },
+        {
+            "name": "Rifampicin",
+            "image": "https://5.imimg.com/data5/AF/CP/MY-7034457/rifampicin-capsules.jpg",
+            "price": 200,
+            "subsidized_price": 140,
+            "quantity": 40,
+            "description": "An antibiotic used to treat tuberculosis and other infections."
+        },
+        {
+            "name": "Prednisone",
+            "image": "https://www.xalmeds.com/cdn/shop/files/BBA7C6AF-3165-4F01-AC7C-BF1C5B7A4E8E_cdca3d4b-b3d1-4260-9d53-6a645a517c61_1445x.jpg?v=1729482966",
+            "price": 80,
+            "subsidized_price": 56,
+            "quantity": 70,
+            "description": "A corticosteroid used to treat allergic and inflammatory conditions."
+        },
+        {
+            "name": "Bromhexine",
+            "image": "https://static.meds.cvpharmacy.in/wp-content/uploads/2024/06/294_10afc1a7-314a-49ed-ad04-a3a770259b10_10afc1a7-314a-49ed-ad04-a3a770259b10-1.jpg",
+            "price": 30,
+            "subsidized_price": 21,
+            "quantity": 200,
+            "description": "A mucolytic agent that helps clear mucus from the lungs."
+        },
+        {
+            "name": "Mometasone",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2022/8/VP/SM/CG/149484080/20gm-mometasone-furoate-cream.jpg",
+            "price": 250,
+            "subsidized_price": 175,
+            "quantity": 60,
+            "description": "A corticosteroid used to treat skin conditions and allergies."
+        },
+        {
+            "name": "Sildenafil",
+            "image": "https://res.cloudinary.com/zava-www-uk/image/upload/a_exif,f_auto,e_sharpen:100,c_fit,w_800,h_600,fl_lossy/v1711032118/sd/uk/services-setup/erectile-dysfunction-unit/sildenafil/zw0aximyqvgb8jzvbby3.png",
+            "price": 250,
+            "subsidized_price": 175,
+            "quantity": 60,
+            "description": "Used to treat erectile dysfunction and pulmonary hypertension."
+        },
+        {
+            "name": "Lisinopril",
+            "image": "https://assets.sayacare.in/api/images/product_image/large_image/286/66/lisinopril-5mg-10-tablet-286_1.webp",
+            "price": 120,
+            "subsidized_price": 84,
+            "quantity": 80,
+            "description": "An ACE inhibitor used to treat high blood pressure."
+        },
+        {
+            "name": "Tamsulosin",
+            "image": "https://www.internationaldrugmart.com/wp-content/uploads/2023/03/Tamsulosin-0.4mg-1.webp",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 70,
+            "description": "Used to treat symptoms of an enlarged prostate."
+        },
+        {
+            "name": "Bupropion",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2023/7/325433568/OP/MW/TW/132158408/bupropion-xl-300-mg-bupron--500x500.jpg",
+            "price": 300,
+            "subsidized_price": 210,
+            "quantity": 50,
+            "description": "An antidepressant used to treat depression and smoking cessation."
+        },
+        {
+            "name": "Loratadine",
+            "image": "https://img2.exportersindia.com/product_images/bc-full/2020/7/6768955/loratadine-tablets-1594448074-5516448.jpeg",
+            "price": 40,
+            "subsidized_price": 28,
+            "quantity": 150,
+            "description": "An antihistamine used to treat allergies and hay fever."
+        },
+        {
+            "name": "Naproxen",
+            "image": "https://www.aflofarm.com.pl/media/__sized__/produkt_zdjecia/naproxen-aflofarm-zdjecie-glowne-M2-thumbnail-450x450.png",
+            "price": 80,
+            "subsidized_price": 56,
+            "quantity": 100,
+            "description": "A pain reliever used to treat inflammation and arthritis."
+        },
+        {
+            "name": "Flunil-10 (Fluoxetine)",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2022/9/GN/LY/IE/154048565/fluoxetine-10mg-tablet.png",
+            "price": 150,
+            "subsidized_price": 105,
+            "quantity": 60,
+            "description": "An antidepressant used to treat depression and anxiety."
+        },
+        {
+            "name": "Chlorpheniramine",
+            "image": "https://nestoronline.in/product_image/images/CHANGE/Screenshot%202022-08-01%20122038.png",
+            "price": 30,
+            "subsidized_price": 21,
+            "quantity": 200,
+            "description": "An antihistamine used to relieve allergy symptoms."
+        },
+        {
+            "name": "Nitroglycerin",
+            "image": "https://imgcdn.mckesson.com/CumulusWeb/Images/Original_Image/467155_front.jpg",
+            "price": 300,
+            "subsidized_price": 210,
+            "quantity": 50,
+            "description": "Used to treat chest pain (angina) and heart conditions."
+        },
+        {
+            "name": "Zinco Boost",
+            "image": "https://5.imimg.com/data5/SELLER/Default/2022/6/OZ/HF/UM/149582277/img-20220531-160201-01-500x500.jpg",
+            "price": 50,
+            "subsidized_price": 35,
+            "quantity": 120,
+            "description": "A zinc supplement that supports immune health."
+        },
+        
+        {
+            "name": "clindamycin",
+            "image": "https://www.netmeds.com/images/product-v1/600x600/1065727/clindamycin_phosphate_nanz_gel_20gm_549450_0_0.jpg",
+            "price": 70,
+            "subsidized_price": 49,
+            "quantity": 40,
+            "description": "Dettol antiseptic is a disinfectant used to kill germs and prevent infection."
+        }
+    ]

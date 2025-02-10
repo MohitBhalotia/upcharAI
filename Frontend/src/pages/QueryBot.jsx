@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ChatComponent = () => {
+const QueryBot = () => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 
   const sendMessage = async () => {
     if (!message.trim()) return;
-    
+
     const newMessage = { text: message, sender: "user" };
     setChat([...chat, newMessage]);
     setMessage("");
-    
+
     try {
       const res = await axios.post("http://localhost:8000/chat", {
         message: newMessage.text,
         session_id: "user123",
       });
-      
+
       const aiResponse = { text: res.data.translated_response, sender: "ai" };
       setChat([...chat, newMessage, aiResponse]);
     } catch (error) {
@@ -38,8 +38,10 @@ const ChatComponent = () => {
             <div
               key={index}
               className={`p-2 max-w-xs rounded-lg text-white ${
-    msg.sender === "user" ? "bg-blue-500 self-end ml-auto" : "bg-gray-400 self-start mr-auto"
-  }`}
+                msg.sender === "user"
+                  ? "bg-blue-500 self-end ml-auto"
+                  : "bg-gray-400 self-start mr-auto"
+              }`}
             >
               {msg.text}
             </div>
@@ -66,4 +68,4 @@ const ChatComponent = () => {
   );
 };
 
-export default ChatComponent;
+export default QueryBot;

@@ -20,6 +20,9 @@ const medicineSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+  },
 });
 
 const medicineModel = mongoose.model("Medicine", medicineSchema);
