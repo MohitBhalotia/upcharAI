@@ -85,14 +85,15 @@ def predict_disease(request: SymptomsRequest):
                 messages=[
                     {
                         "role": "user",
-                        "content": (f"You have to put forward these details very formally about the person's health.\n "
-                                    f"Each of the further points should be put into bullet points. \n"
-                                    f"The disease is - {disease_info['DiseaseName']}, \n"
-                                    f"The home remedies related to the disease are - {disease_info['ManagedBy']},\n "
-                                    f"Is treated with - {disease_info['TreatedWith']}, \n"
-                                    f"Requires test - {disease_info['RequiresTest']}, \n"
-                                    f"Comes under the category - {disease_info['BelongsTo']}\n\n"
-                                    f"Sincerely,\nUpcharAI")
+                        "content": (
+                            "Provide a concise, structured response in bullet points with the following details:\n"
+                            f"- *Disease:* {disease_info['DiseaseName']}\n"
+                            f"- *Home Remedies:* {', '.join(disease_info['ManagedBy'])}\n"
+                            f"- *Treated With:* {', '.join(disease_info['TreatedWith'])}\n"
+                            f"- *Requires Test:* {', '.join(disease_info['RequiresTest'])}\n"
+                            f"- *Comes Under:* {', '.join(disease_info['BelongsTo'])}\n\n"
+                            "End the response with:\n\nSincerely,\nUpcharAI"
+                        )
                     }
                 ],
                 model="llama-3.3-70b-versatile",

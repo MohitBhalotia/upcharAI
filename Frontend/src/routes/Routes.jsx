@@ -14,6 +14,7 @@ import QueryBot from "../pages/QueryBot";
 import NotFound from "../pages/NotFound";
 
 import AuthLayout from "../Layout/AuthLayout";
+import LoginAbhaNumber from "../pages/LoginAbhaNumber";
 
 const PrivateRoute = ({ children }) => (
   <AuthLayout authentication={true}>{children}</AuthLayout>
@@ -45,6 +46,14 @@ const routes = [
     element: (
       <PublicRoute>
         <LoginQr />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "/login/login-number",
+    element: (
+      <PublicRoute>
+        <LoginAbhaNumber />
       </PublicRoute>
     ),
   },

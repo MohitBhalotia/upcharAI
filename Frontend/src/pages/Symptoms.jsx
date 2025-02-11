@@ -43,8 +43,9 @@ const Symptoms = () => {
       );
       setResponse(response.data[0]); // Store the response from the backend
     } catch (error) {
-      console.error("Error sending symptoms:", error);
-      setResponse("There was an error while sending your symptoms.");
+      setResponse(
+        "No diseases found matching all given symptoms in our database."
+      );
     } finally {
       setLoading(false);
     }
@@ -59,7 +60,9 @@ const Symptoms = () => {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Select Your Symptoms</h2>
+      <h2 className="text-3xl font-semibold mb-4 text-center">
+        {response ? "Your Result" : "Select Your Symptoms"}
+      </h2>
 
       {/* If response is null (no prediction yet), show symptom selection */}
       {!response ? (
@@ -118,10 +121,26 @@ const Symptoms = () => {
       ) : (
         // Show the response once the symptoms are submitted
         <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg">
-          <h3 className="text-lg font-semibold">Predicted Disease:</h3>
-          <p className="font-medium text-blue-600">{response.disease}</p>
-          <h3 className="text-lg font-semibold mt-2">Details:</h3>
-          <p>{response.formatted_response}</p>
+          {response?.disease && (
+            <h3 className="text-lg font-semibold">Predicted Disease:</h3>
+          )}
+          <p className="font-medium text-blue-600">
+            {response?.disease ? response?.disease : null}
+          </p>
+          {response.formatted_response && (
+            <h3 className="text-lg font-semibold mt-2">Details:</h3>
+          )}
+          <p
+            className={`${
+              !response.formatted_response
+                ? "text-center font-bold text-xl"
+                : ""
+            }`}
+          >
+            {response?.formatted_response
+              ? response.formatted_response
+              : response}
+          </p>
 
           {/* "Try Again" button */}
           <div className="mt-4 flex gap-4">

@@ -13,8 +13,6 @@ export const loginWithQr = createAsyncThunk(
   "auth/loginWithQr",
   async (qrCodeData, { rejectWithValue }) => {
     try {
-      console.log(qrCodeData);
-
       const response = await axios.post(
         `${backendUrl}/auth/login-qr`,
         qrCodeData
@@ -31,6 +29,28 @@ export const loginWithQr = createAsyncThunk(
       return { userId, token };
     } catch (error) {
       return rejectWithValue(error.response?.data?.msg || "QR login failed");
+    }
+  }
+);
+export const loginWithAbha = createAsyncThunk(
+  "auth/loginWithAbha",
+  async (abha, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${backendUrl}/auth/login-abha`, {
+        abha: abha,
+      });
+
+      const token = response.data.token;
+      const decodedToken = jwtDecode(token); // Decode JWT to extract userId
+      const userId = decodedToken.userId;
+
+      // Save userId and token to localStorage
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("token", token);
+
+      return { userId, token };
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.msg || "Abha login failed");
     }
   }
 );
@@ -91,6 +111,19 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(loginWithQr.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(loginWithAbha.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithAbha.fulfilled, (state, action) => {
+        state.userId = action.payload.userId;
+        state.token = action.payload.token;
+        state.loading = false;
+      })
+      .addCase(loginWithAbha.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
