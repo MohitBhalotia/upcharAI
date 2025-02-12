@@ -34,7 +34,7 @@ const Dispensary = () => {
 
       if (response.status === 201) {
         alert("Order placed successfully!");
-        setIsModalOpen(false); // Close modal on success
+        setIsModalOpen(false);
       } else {
         throw new Error("Order failed");
       }
@@ -57,20 +57,23 @@ const Dispensary = () => {
       ) : null}
 
       {/* Heading */}
-      <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+      <h1 className="text-[#024E56] text-2xl font-extrabold text-center mb-4">
         Our Medicines
       </h1>
 
       {/* Discount Banner for Non-Logged-in Users */}
       {!userId && (
-        <div className="overflow-hidden bg-amber-500 mb-10">
+        <div className="overflow-hidden bg-[#C1FFEE] h-12 mb-6 flex items-center">
           <Marquee
             speed={80}
-            className="text-red-600 font-semibold my-6 text-xl sm:text-xl"
+            className="text-[#024E56] font-semibold text-lg sm:text-lg"
           >
-            <div className="flex gap-x-120">
-              <span> Login using ABHA card & get 30% off on medicines! </span>
-              <span> Exclusive discounts on essential medicines. </span>
+            <div className="flex gap-x-6">
+              <span>
+                Login using ABHA card & get{" "}
+                <span className="text-[#FA4D5E]">30% off</span> on medicines!
+              </span>
+              <span>Exclusive discounts on essential medicines.</span>
             </div>
           </Marquee>
         </div>
