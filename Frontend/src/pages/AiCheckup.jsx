@@ -6,7 +6,6 @@ const AiCheckup = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
-
   const buttons = [
     { path: "via-image", label: "Through Image", icon: "image" },
     { path: "via-symptoms", label: "Through Symptoms", icon: "symptom" },
