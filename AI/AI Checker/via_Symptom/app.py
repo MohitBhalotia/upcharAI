@@ -102,7 +102,6 @@ def predict_disease(request: SymptomsRequest):
                 model="llama-3.3-70b-versatile",
             )
             response_text = chat_completion.choices[0].message.content
-            
             diseases_info.append({
                 "disease": disease_info["DiseaseName"],
                 "formatted_response": response_text
