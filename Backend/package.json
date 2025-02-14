@@ -4,7 +4,8 @@
   "description": "Backend of UpcharAI",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
