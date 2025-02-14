@@ -2,22 +2,22 @@ require("express-async-errors");
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("../config/connectDB");
+const connectDB = require("../src/config/connectDB");
 
 const mongoUrl = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
-const errorHandler = require("../middlewares/error-handler");
-const notFound = require("../middlewares/notFound");
+const errorHandler = require("../src/middlewares/error-handler");
+const notFound = require("../src/middlewares/notFound");
 
 const app = express();
 app.use(cors());
 
-const authRouter = require("../routes/authRoute");
-const hospitalRouter = require("../routes/hospitalRoute");
-const dispensaryRouter = require("../routes/dispensaryRoute");
-const cartRouter = require("../routes/cartRoute");
-const sosRouter = require("../routes/sosRoute");
+const authRouter = require("../src/routes/authRoute");
+const hospitalRouter = require("../src/routes/hospitalRoute");
+const dispensaryRouter = require("../src/routes/dispensaryRoute");
+const cartRouter = require("../src/routes/cartRoute");
+const sosRouter = require("../src/routes/sosRoute");
 
 app.use(express.json());
 
