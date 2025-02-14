@@ -10,7 +10,7 @@ const Dispensary = () => {
   const dispatch = useDispatch();
   const medicines = useSelector((state) => state.med.medicines) || [];
   const userId = useSelector((state) => state.auth.userId);
-  const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [medicineName, setMedicineName] = useState("");
