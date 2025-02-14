@@ -5,7 +5,7 @@ import HospitalCard from "../components/HospitalCard";
 import { useSelector } from "react-redux";
 
 const DoctorAppointment = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URI;
+  const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
   const [hospitals, setHospitals] = useState([]);
 
   const getLocation = () => {

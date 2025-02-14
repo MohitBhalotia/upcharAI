@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // Import JWT decode library
 
-const backendUrl = import.meta.env.VITE_BACKEND_URI;
+const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
 
 // Load auth state from localStorage
 const storedToken = localStorage.getItem("token") || null;

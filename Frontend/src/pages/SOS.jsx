@@ -14,7 +14,7 @@ const SOS = () => {
       
       // Make API call
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/sos/sos-call`
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/sos/sos-call`
       );
       
       if (response.data.success) {
