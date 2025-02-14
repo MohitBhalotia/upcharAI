@@ -5,6 +5,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/slices/authSlice"; // Adjust the path as per your project structure
 
+// Import images
+import upcharLogo from "../../public/images/upcharLogo.png";
+import userIcon from "../../public/images/user.png";
+import ambulanceIcon from "../../public/images/ambulance.png";
+
 const Navbar = () => {
   const location = useLocation();
   const userId = useSelector((state) => state.auth.userId);
@@ -22,7 +27,7 @@ const Navbar = () => {
       <header className="flex flex-col items-center text-center w-full mb-4 md:mb-0">
         <Link to="/">
           <img
-            src="./src/assets/upcharLogo.png"
+            src={upcharLogo}
             alt="Upchar AI Logo"
             className="w-28 md:w-36"
           />
@@ -37,7 +42,7 @@ const Navbar = () => {
       <div className="absolute top-4 left-6 md:left-10 flex flex-col md:flex-row items-center gap-2 md:gap-6">
         {userId && (
           <img
-            src="./src/assets/user.png"
+            src={userIcon}
             alt="User Icon"
             className="w-6 h-6 md:w-8 md:h-8"
           />
@@ -72,7 +77,7 @@ const Navbar = () => {
             label={
               <>
                 <img
-                  src="./src/assets/ambulance.png"
+                  src={ambulanceIcon}
                   alt="Ambulance Icon"
                   className="w-5 h-5 md:w-6 md:h-6"
                 />

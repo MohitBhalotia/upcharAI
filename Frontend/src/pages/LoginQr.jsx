@@ -3,8 +3,10 @@ import QrScanner from "qr-scanner"; // Import qr-scanner
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginWithQr } from "../store/slices/authSlice";
-import scan1 from "../assets/scan1.svg";
-import scan2 from "../assets/scan2.svg";
+
+// Import images
+import scan1 from "../../public/images/scan1.svg";
+import scan2 from "../../public/images/scan2.svg";
 
 const LoginQr = () => {
   const navigate = useNavigate();
@@ -70,6 +72,7 @@ const LoginQr = () => {
       clearInterval(interval);
     };
   }, []);
+
   return (
     <div className=" flex justify-center items-center px-8 py-4">
       <div className="bg-[#132D46] p-12 rounded-2xl shadow-[0px_12px_32px_0px_rgba(9,14,29,0.12)] w-full max-w-md flex flex-col gap-6">

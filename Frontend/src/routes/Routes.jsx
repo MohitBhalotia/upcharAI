@@ -59,11 +59,7 @@ const routes = [
   },
   {
     path: "/sos",
-    element: (
-      <PublicRoute>
-        <SOS />
-      </PublicRoute>
-    ),
+    element: <SOS />,
   },
   {
     path: "/dispensary",

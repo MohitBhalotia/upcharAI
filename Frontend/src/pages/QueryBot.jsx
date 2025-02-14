@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
+import aiBot from "../../public/images/aiBot.svg";
+import send from "../../public/images/send.svg";
 const QueryBot = () => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
@@ -15,18 +16,18 @@ const QueryBot = () => {
 
   const sendMessage = async () => {
     if (!message.trim()) return;
-    
+
     const newMessage = { text: message, sender: "user" };
     setChat([...chat, newMessage]);
     setMessage("");
     setIsTyping(true);
-    
+
     try {
       const res = await axios.post("http://localhost:8000/chat", {
         message: newMessage.text,
         session_id: "user123",
       });
-      
+
       const aiResponse = { text: res.data.translated_response, sender: "ai" };
       setChat([...chat, newMessage, aiResponse]);
     } catch (error) {
@@ -42,11 +43,11 @@ const QueryBot = () => {
     <div className="flex flex-col items-center justify-center bg-[#ffffff] p-6 min-h-[00px]">
       <div className="w-full max-w-xl bg-white shadow-[0px_16px_32px_rgba(9,14,29,0.12)] rounded-lg overflow-hidden">
         <div className="p-4 border-b bg-[#01C38E] text-white text-xl font-semibold flex items-center">
-          <img src="./src/assets/aiBot.svg" alt="Medical AI" className="w-10 h-10 mr-2" />
+          <img src={aiBot} alt="Medical AI" className="w-10 h-10 mr-2" />
           Medical AI Chatbot
         </div>
-        <div 
-          className="h-[470px] overflow-y-auto p-4 space-y-2" 
+        <div
+          className="h-[470px] overflow-y-auto p-4 space-y-2"
           id="chat-window"
           ref={chatWindowRef}
         >
@@ -54,7 +55,9 @@ const QueryBot = () => {
             <div
               key={index}
               className={`p-3 max-w-sm rounded-lg text-white text-sm md:text-base break-words ${
-                msg.sender === "user" ? "bg-[#01C38E] self-end ml-auto" : "bg-gray-400 self-start mr-auto"
+                msg.sender === "user"
+                  ? "bg-[#01C38E] self-end ml-auto"
+                  : "bg-gray-400 self-start mr-auto"
               }`}
             >
               {msg.text}
@@ -80,7 +83,7 @@ const QueryBot = () => {
             className="ml-3 bg-[#01C38E] text-white font-semibold px-5 py-3 rounded-lg hover:bg-[#01996F] flex items-center transition-all duration-200"
           >
             Send
-            <img src="./src/assets/send.svg" alt="Send" className="w-6 h-6 ml-2" />
+            <img src={send} alt="Send" className="w-6 h-6 ml-2" />
           </button>
         </div>
       </div>

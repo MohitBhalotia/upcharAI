@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 
+// Import images
+import scan from "../../public/images/scan.svg";
+import scanSelect from "../../public/images/scan_select.svg";
+import pin from "../../public/images/pin.svg";
+import pinSelect from "../../public/images/pin_select.svg";
+import next from "../../public/images/next.svg";
+import nextSelect from "../../public/images/next_select.svg";
+
 const Login = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
 
   const buttons = [
-    { path: "login-qr", label: "Scan Ayushmaan Card", icon: "scan" },
-    { path: "login-number", label: "Enter ABHA Number", icon: "pin" },
+    { path: "login-qr", label: "Scan Ayushmaan Card", icon: scan, iconSelected: scanSelect },
+    { path: "login-number", label: "Enter ABHA Number", icon: pin, iconSelected: pinSelect },
   ];
 
   const handleClick = (btn) => {
@@ -43,25 +51,13 @@ const Login = () => {
               label={
                 <>
                   <img
-                    src={`./src/assets/${
-                      selected === btn.icon
-                        ? btn.icon + "_select"
-                        : hovered === btn.icon
-                        ? btn.icon + "_select"
-                        : btn.icon
-                    }.svg`}
+                    src={selected === btn.icon || hovered === btn.icon ? btn.iconSelected : btn.icon}
                     className="w-22 h-22"
                     alt={btn.label}
                   />
                   <span className="text-left">{btn.label}</span>
                   <img
-                    src={`./src/assets/${
-                      selected === btn.icon
-                        ? "next_select"
-                        : hovered === btn.icon
-                        ? "next_select"
-                        : "next"
-                    }.svg`}
+                    src={selected === btn.icon || hovered === btn.icon ? nextSelect : next}
                     className="w-6 h-6 ml-auto"
                     alt="Next"
                   />
