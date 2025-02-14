@@ -71,7 +71,7 @@ const LoginQr = () => {
     };
   }, []);
   return (
-    <div className="bg-gray-50 flex justify-center items-center px-8 py-4">
+    <div className=" flex justify-center items-center px-8 py-4">
       <div className="bg-[#132D46] p-12 rounded-2xl shadow-[0px_12px_32px_0px_rgba(9,14,29,0.12)] w-full max-w-md flex flex-col gap-6">
         {!scanning && (
           <div className="flex justify-center">

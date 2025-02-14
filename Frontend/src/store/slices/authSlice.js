@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // Import JWT decode library
+import { toast } from "react-toastify";
 
 const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
 
@@ -108,11 +109,13 @@ const authSlice = createSlice({
       .addCase(loginWithQr.fulfilled, (state, action) => {
         state.userId = action.payload.userId;
         state.token = action.payload.token;
+        toast.success("Login successfull");
         state.loading = false;
       })
       .addCase(loginWithQr.rejected, (state, action) => {
-        state.loading = false;
         state.error = action.payload;
+        toast.error(action.payload);
+        state.loading = false;
       })
       .addCase(loginWithAbha.pending, (state) => {
         state.loading = true;
@@ -121,11 +124,13 @@ const authSlice = createSlice({
       .addCase(loginWithAbha.fulfilled, (state, action) => {
         state.userId = action.payload.userId;
         state.token = action.payload.token;
+        toast.success("Login successfull");
         state.loading = false;
       })
       .addCase(loginWithAbha.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error(action.payload);
       })
 
       // Handle getUser

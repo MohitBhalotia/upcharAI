@@ -33,7 +33,7 @@ const DoctorAppointment = () => {
         `${backendUrl}/hospitals/get-nearby-hospitals?latitude=${latitude}&longitude=${longitude}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setHospitals(res.data.hospitals);
+      setHospitals(res.data.hospitals||[]);
     } catch (error) {
       console.log(error);
     }

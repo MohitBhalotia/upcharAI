@@ -7,7 +7,7 @@ import os
 import json
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables and get variables
 load_dotenv()
 
 # Initialize Neo4j connection
@@ -96,6 +96,7 @@ def predict_disease(request: SymptomsRequest):
                         "role": "user",
                         "content": (
                             "Provide a concise, structured response in bullet points with the following details:\n\n"
+<<<<<<< HEAD
                             f"* Disease: {disease_info['DiseaseName']}\n"
                             f"* Home Remedies:\n" + 
                             "".join([f"  * {remedy}\n" for remedy in disease_info['ManagedBy']]) + 
@@ -105,11 +106,23 @@ def predict_disease(request: SymptomsRequest):
                             "".join([f"  * {test}\n" for test in disease_info['RequiresTest']]) + 
                             f"* Comes Under: {', '.join(disease_info['BelongsTo'])}\n\n"
                             "Sincerely,\nUpcharAI"
+=======
+                            f"*Disease:* {disease_info['DiseaseName']}\n\n"
+                            f"*Home Remedies:*\n\n" + 
+                            "".join([f"- {remedy}\n\n" for remedy in disease_info['ManagedBy']]) + "\n"
+                            f"*Treated With:*\n\n" + 
+                            "".join([f"- {treatment}\n\n" for treatment in disease_info['TreatedWith']]) + "\n"
+                            f"*Requires Test:*\n\n" + 
+                            "".join([f"- {test}\n\n" for test in disease_info['RequiresTest']]) + "\n"
+                            f"*Comes Under:* {', '.join(disease_info['BelongsTo'])}\n\n"
+                            "---\n\n*Sincerely,\n\nUpcharAI*"
+>>>>>>> c341245224ec9e1ee41588116290d5a597f5b761
                         )
                     }
                 ],
                 model="llama-3.3-70b-versatile",
             )
+<<<<<<< HEAD
             output = chat_completion.choices[0].message.content
             
             # Ensure correct dictionary structure
@@ -119,9 +132,16 @@ def predict_disease(request: SymptomsRequest):
             }
             
             final_output.append(disease_detail)
+=======
+            response_text = chat_completion.choices[0].message.content
+            diseases_info.append({
+                "disease": disease_info["DiseaseName"],
+                "formatted_response": response_text
+            })
+>>>>>>> c341245224ec9e1ee41588116290d5a597f5b761
     
     return Response(content=json.dumps(final_output), media_type="application/json")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=8008)
+    uvicorn.run(app, host="localhost",port=8008)

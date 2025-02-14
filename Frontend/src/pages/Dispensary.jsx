@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMedicines } from "../store/slices/mediSlice";
 import Marquee from "react-fast-marquee";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Dispensary = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Dispensary = () => {
 
   const handleOrder = async () => {
     if (!medicineName || quantity < 1) {
-      alert("Please enter a valid medicine name and quantity.");
+      toast.warn("Please enter a valid medicine name and quantity.");
       return;
     }
 
@@ -33,14 +34,12 @@ const Dispensary = () => {
       });
 
       if (response.status === 201) {
-        alert("Order placed successfully!");
         setIsModalOpen(false);
       } else {
         throw new Error("Order failed");
       }
     } catch (error) {
       console.error("Error placing order:", error);
-      alert("Failed to place order. Please try again.");
     }
   };
 
@@ -50,14 +49,14 @@ const Dispensary = () => {
       {userId ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className="absolute top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700"
+          className="absolute  top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700"
         >
           Order Medicine
         </button>
       ) : null}
 
       {/* Heading */}
-      <h1 className="text-[#024E56] text-2xl font-extrabold text-center mb-4">
+      <h1 className="text-[#024E56] text-3xl font-extrabold text-center mb-4">
         Our Medicines
       </h1>
 

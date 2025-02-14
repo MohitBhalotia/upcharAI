@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
-      <Outlet/>
+      <Outlet />
     </div>
   );
 };
