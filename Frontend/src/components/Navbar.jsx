@@ -33,22 +33,14 @@ const Navbar = () => {
         </p>
       </header>
 
-      {/* User, Cart, and Back Button */}
+      {/* User and Cart Icons */}
       <div className="absolute top-4 left-6 md:left-10 flex flex-col md:flex-row items-center gap-2 md:gap-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-white bg-gray-500 px-3 py-2 rounded-lg text-sm md:text-base"
-        >
-          ←
-        </button>
         {userId && (
-          <Link to={"/profile"}>
-            <img
-              src="./src/assets/user.png"
-              alt="User Icon"
-              className="w-6 h-6 md:w-8 md:h-8"
-            />
-          </Link>
+          <img
+            src="./src/assets/user.png"
+            alt="User Icon"
+            className="w-6 h-6 md:w-8 md:h-8"
+          />
         )}
         {location.pathname === "/dispensary" && (
           <Link to="/cart">

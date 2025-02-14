@@ -15,7 +15,6 @@ import NotFound from "../pages/NotFound";
 
 import AuthLayout from "../Layout/AuthLayout";
 import LoginAbhaNumber from "../pages/LoginAbhaNumber";
-import Profile from "../pages/Profile";
 
 const PrivateRoute = ({ children }) => (
   <AuthLayout authentication={true}>{children}</AuthLayout>
@@ -60,7 +59,11 @@ const routes = [
   },
   {
     path: "/sos",
-    element: <SOS />,
+    element: (
+      <PublicRoute>
+        <SOS />
+      </PublicRoute>
+    ),
   },
   {
     path: "/dispensary",
@@ -127,14 +130,6 @@ const routes = [
     element: (
       <PrivateRoute>
         <Symptoms />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "/profile",
-    element: (
-      <PrivateRoute>
-        <Profile />
       </PrivateRoute>
     ),
   },

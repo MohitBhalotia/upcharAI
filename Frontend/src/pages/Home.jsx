@@ -69,7 +69,10 @@ const Home = () => {
           ))}
         </div>
       </div>
-      
+      {/* Footer Section */}
+      <footer className="mt-12 text-center text-gray-600">
+        <p>&copy; 2025 Upchar AI - All Rights Reserved</p>
+      </footer>
     </div>
   );
 };

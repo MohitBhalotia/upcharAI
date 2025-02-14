@@ -63,6 +63,8 @@ const loginwithAbha = async (req, res) => {
 
   try {
     const formattedAbha = formatAbha(abha);
+    console.log("Formatted ABHA:", formattedAbha);
+
     const user = await User.findOne({ hidn: formattedAbha });
 
     if (user) {
