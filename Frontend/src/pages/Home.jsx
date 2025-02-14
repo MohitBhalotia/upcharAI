@@ -20,7 +20,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-8 py-4">
+    <div className=" bg-gray-50 px-8 py-4">
       {/* Button Section */}
       <div className="flex justify-center items-center">
         <div className="flex justify-center w-md min-w-120 flex-col gap-8 bg-gray-50 p-4 rounded-2xl">
@@ -69,10 +69,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      {/* Footer Section */}
-      <footer className="mt-12 text-center text-gray-600">
-        <p>&copy; 2025 Upchar AI - All Rights Reserved</p>
-      </footer>
+      
     </div>
   );
 };
