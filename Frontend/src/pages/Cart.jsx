@@ -41,15 +41,13 @@ const CartPage = () => {
 
   if (loading) {
     return (
-      <h1 className="text-center text-2xl font-semibold">
-        Loading your cart...
-      </h1>
+      <h1 className="text-center text-2xl font-bold">Loading your cart...</h1>
     );
   }
 
   return (
-    <div className="max-w-xs mx-auto p-4 bg-gray-50">
-      <h1 className="text-2xl font-semibold text-center mb-6 text-[#132D46]">
+    <div className="p-4 mx-auto w-full max-w-[90%] md:max-w-[80%] lg:max-w-[70%] xl:max-w-[60%] min-h-screen">
+      <h1 className="text-3xl font-extrabold text-center mb-6 text-[#132D46]">
         Your Cart
       </h1>
       {cartItems.length > 0 ? (
@@ -61,66 +59,68 @@ const CartPage = () => {
             return (
               <div
                 key={item._id}
-                className="relative flex items-center bg-white shadow-md p-4 rounded-lg space-x-4 min-h-[100px]"
+                className="flex flex-col md:flex-row items-center justify-between bg-white shadow-md py-4 px-8 rounded-lg w-full"
               >
                 <img
                   src={medicine?.image}
                   alt={medicine?.name}
                   className="w-24 h-24 object-contain"
                 />
-                <div className="flex-grow flex flex-col justify-between">
-                  <h3 className="text-sm font-semibold text-gray-800">
+                <div className="flex flex-col flex-grow text-center md:text-left">
+                  <h3 className="text-sm font-semibold text-gray-800 px-5">
                     {medicine?.name}
                   </h3>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 px-5">
                     ₹{userId ? medicine?.subsidized_price : medicine?.price}{" "}
                     each
                   </span>
+                </div>
+                <div className="flex items-center space-x-4 md:space-x-6 mt-4 md:mt-0">
                   <span className="text-xl font-bold text-gray-900">
                     ₹
                     {(userId ? medicine?.subsidized_price : medicine?.price) *
                       item.quantity}
                   </span>
-                </div>
-                <button
-                  onClick={() => handleRemoveItem(item.medicineId)}
-                  className="absolute top-2 right-2 text-[#FA4D5E] text-sm font-semibold hover:scale-105 transition-transform"
-                >
-                  Delete
-                </button>
-                <div className="absolute bottom-2 right-2 flex items-center space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() =>
+                        handleUpdateQuantity(item.medicineId, item.quantity - 1)
+                      }
+                      className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <span className="w-8 text-center text-lg font-medium">
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() =>
+                        handleUpdateQuantity(item.medicineId, item.quantity + 1)
+                      }
+                      className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
-                    onClick={() =>
-                      handleUpdateQuantity(item.medicineId, item.quantity - 1)
-                    }
-                    className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
+                    onClick={() => handleRemoveItem(item.medicineId)}
+                    className="text-[#FA4D5E] text-sm font-semibold hover:scale-105 transition-transform"
                   >
-                    -
-                  </button>
-                  <span className="w-8 text-center text-lg font-medium">
-                    {item.quantity}
-                  </span>
-                  <button
-                    onClick={() =>
-                      handleUpdateQuantity(item.medicineId, item.quantity + 1)
-                    }
-                    className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
-                  >
-                    +
+                    Delete
                   </button>
                 </div>
               </div>
             );
           })}
 
-          <div className="space-y-2 p-4 bg-white shadow-md rounded-lg">
-            <div className="flex justify-between text-gray-600 text-sm">
+          <div className="space-y-2 p-4 bg-white shadow-md rounded-lg w-full max-w-lg mx-auto text-center">
+            <div className="flex justify-between text-gray-600 text-base">
               <span>Subtotal:</span>
               <span className="text-gray-900 font-bold">
                 ₹{getCartAmount()}
               </span>
             </div>
-            <div className="flex justify-between text-gray-600 text-sm">
+            <div className="flex justify-between text-gray-600 text-base">
               <span>Discount:</span>
               <span className="text-gray-900 font-bold">-₹0</span>
             </div>
@@ -134,7 +134,7 @@ const CartPage = () => {
           <div className="mt-4 flex justify-center">
             <Link
               to="/checkout"
-              className="bg-[#01C38E] text-white w-full py-3 rounded-lg shadow-md text-center font-bold text-lg hover:bg-blue-700"
+              className="bg-[#01C38E] text-white px-6 py-3 rounded-lg shadow-md text-center font-bold text-lg hover:bg-blue-700 w-full max-w-lg"
             >
               Proceed to Checkout
             </Link>

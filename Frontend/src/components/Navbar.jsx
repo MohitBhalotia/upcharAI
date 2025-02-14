@@ -3,8 +3,8 @@ import Button from "./ui/Button";
 import CartIcon from "./CartIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/slices/authSlice"; // Adjust the path as per your project structure
-
+import { logout } from "../store/slices/authSlice";
+import ArrowLeftIcon from "../../public/images/arrow-left.svg";
 // Import images
 import upcharLogo from "../../public/images/upcharLogo.png";
 import userIcon from "../../public/images/user.png";
@@ -21,16 +21,16 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="bg-[#132D46] py-4 px-6 md:px-10 rounded-bl-[32px] rounded-br-[32px] flex flex-col items-center relative">
       {/* Logo and Description Section */}
       <header className="flex flex-col items-center text-center w-full mb-4 md:mb-0">
         <Link to="/">
-          <img
-            src={upcharLogo}
-            alt="Upchar AI Logo"
-            className="w-28 md:w-36"
-          />
+          <img src={upcharLogo} alt="Upchar AI Logo" className="w-28 md:w-36" />
         </Link>
         <p className="mt-2 text-sm md:text-lg text-[#979797] max-w-xs md:max-w-md">
           Your one-stop healthcare solution powered by AI and smart health
@@ -38,8 +38,11 @@ const Navbar = () => {
         </p>
       </header>
 
-      {/* User and Cart Icons */}
-      <div className="absolute top-4 left-6 md:left-10 flex flex-col md:flex-row items-center gap-2 md:gap-6">
+      {/* User, Cart, and Back Icons */}
+      <div className="absolute top-4 left-6 md:left-10 flex items-center gap-3 md:gap-6">
+        <button onClick={handleBack} className="text-white">
+          <img src={ArrowLeftIcon} className="w-6 h-6 md:w-8 md:h-8" />
+        </button>
         {userId && (
           <img
             src={userIcon}
