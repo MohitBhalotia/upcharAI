@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart, updateCart, removeFromCart } from "../store/slices/cartSlice";
-import {getMedicines} from '../store/slices/mediSlice'
+import { getMedicines } from "../store/slices/mediSlice";
+
 const CartPage = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
@@ -18,7 +19,13 @@ const CartPage = () => {
   const getCartAmount = () => {
     return cartItems.reduce((total, item) => {
       const medicine = medicines.find((med) => med._id === item.medicineId);
-      return total + (medicine ? (userId ? medicine.subsidized_price : medicine.price) * item.quantity : 0);
+      return (
+        total +
+        (medicine
+          ? (userId ? medicine.subsidized_price : medicine.price) *
+            item.quantity
+          : 0)
+      );
     }, 0);
   };
 
@@ -33,49 +40,108 @@ const CartPage = () => {
   };
 
   if (loading) {
-    return <h1 className="text-center text-3xl font-semibold">Loading your cart...</h1>;
+    return (
+      <h1 className="text-center text-2xl font-semibold">
+        Loading your cart...
+      </h1>
+    );
   }
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50">
-      <h1 className="text-3xl font-semibold text-center mb-8 text-gray-800">Your Cart</h1>
+    <div className="max-w-xs mx-auto p-4 bg-gray-50">
+      <h1 className="text-2xl font-semibold text-center mb-6 text-[#132D46]">
+        Your Cart
+      </h1>
       {cartItems.length > 0 ? (
         <div className="space-y-6">
           {cartItems.map((item) => {
-            const medicine = medicines.find((med) => med._id === item.medicineId);
+            const medicine = medicines.find(
+              (med) => med._id === item.medicineId
+            );
             return (
-              <div key={item._id} className="flex items-center bg-white border rounded-lg shadow-md p-4 space-x-4">
-                <img src={medicine?.image} alt={medicine?.name} className="w-24 h-24 object-contain" />
-                <div className="flex-grow">
-                  <h3 className="text-xl font-semibold text-gray-800">{medicine?.name}</h3>
-                  <p className="text-gray-600">₹{userId ? medicine?.subsidized_price : medicine?.price} each</p>
+              <div
+                key={item._id}
+                className="relative flex items-center bg-white shadow-md p-4 rounded-lg space-x-4 min-h-[100px]"
+              >
+                <img
+                  src={medicine?.image}
+                  alt={medicine?.name}
+                  className="w-24 h-24 object-contain"
+                />
+                <div className="flex-grow flex flex-col justify-between">
+                  <h3 className="text-sm font-semibold text-gray-800">
+                    {medicine?.name}
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    ₹{userId ? medicine?.subsidized_price : medicine?.price}{" "}
+                    each
+                  </span>
+                  <span className="text-xl font-bold text-gray-900">
+                    ₹
+                    {(userId ? medicine?.subsidized_price : medicine?.price) *
+                      item.quantity}
+                  </span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <button onClick={() => handleUpdateQuantity(item.medicineId, item.quantity - 1)} className="bg-gray-200 px-3 py-2 rounded-md hover:bg-gray-300">-</button>
-                  <span className="w-10 text-center">{item.quantity}</span>
-                  <button onClick={() => handleUpdateQuantity(item.medicineId, item.quantity + 1)} className="bg-gray-200 px-3 py-2 rounded-md hover:bg-gray-300">+</button>
+                <button
+                  onClick={() => handleRemoveItem(item.medicineId)}
+                  className="absolute top-2 right-2 text-[#FA4D5E] text-sm font-semibold hover:scale-105 transition-transform"
+                >
+                  Delete
+                </button>
+                <div className="absolute bottom-2 right-2 flex items-center space-x-2">
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(item.medicineId, item.quantity - 1)
+                    }
+                    className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span className="w-8 text-center text-lg font-medium">
+                    {item.quantity}
+                  </span>
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(item.medicineId, item.quantity + 1)
+                    }
+                    className="bg-[#C1FFEE] px-3 py-1 rounded-md hover:bg-gray-300"
+                  >
+                    +
+                  </button>
                 </div>
-                <div className="ml-4 text-gray-800 font-semibold">
-                  ₹{(userId ? medicine?.subsidized_price : medicine?.price) * item.quantity}
-                </div>
-                <button onClick={() => handleRemoveItem(item.medicineId)} className="text-red-600 hover:text-red-800">Remove</button>
               </div>
             );
           })}
-          <div className="flex justify-between items-center bg-white p-4 shadow-md rounded-lg mt-8">
-            <span className="font-semibold text-lg">Total Price:</span>
-            <span className="text-xl font-bold text-gray-800">₹{getCartAmount()}</span>
+
+          <div className="space-y-2 p-4 bg-white shadow-md rounded-lg">
+            <div className="flex justify-between text-gray-600 text-sm">
+              <span>Subtotal:</span>
+              <span className="text-gray-900 font-bold">
+                ₹{getCartAmount()}
+              </span>
+            </div>
+            <div className="flex justify-between text-gray-600 text-sm">
+              <span>Discount:</span>
+              <span className="text-gray-900 font-bold">-₹0</span>
+            </div>
+            <hr className="border-t border-gray-300" />
+            <div className="flex justify-between text-xl font-extrabold text-gray-900">
+              <span>Total:</span>
+              <span>₹{getCartAmount()}</span>
+            </div>
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <Link
+              to="/checkout"
+              className="bg-[#01C38E] text-white w-full py-3 rounded-lg shadow-md text-center font-bold text-lg hover:bg-blue-700"
+            >
+              Proceed to Checkout
+            </Link>
           </div>
         </div>
       ) : (
         <p className="text-center text-gray-600">Your cart is empty.</p>
-      )}
-      {cartItems.length > 0 && (
-        <div className="mt-6 flex justify-end">
-          <Link to="/checkout" className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700">
-            Proceed to Checkout
-          </Link>
-        </div>
       )}
     </div>
   );

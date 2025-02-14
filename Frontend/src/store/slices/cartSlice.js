@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URI;
 const adminId = import.meta.env.VITE_ADMIN_ID;
@@ -118,6 +119,7 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.cartItems = action.payload.cart; // Add the new item correctly
         state.cartLength = state.cartItems.length;
+        toast.success('Medicine added to cart!')
         state.loading = false;
       })
       .addCase(addToCart.rejected, (state, action) => {
@@ -137,6 +139,7 @@ const cartSlice = createSlice({
         if (item) {
           item.quantity = quantity;
         }
+        toast.success('Cart updated!')
         state.loading = false;
       })
       .addCase(updateCart.rejected, (state, action) => {
@@ -153,6 +156,7 @@ const cartSlice = createSlice({
           (item) => item.medicineId !== action.payload
         );
         state.cartLength = state.cartItems.length;
+        toast.success('Medicine removed from cart')
         state.loading = false;
       })
       .addCase(removeFromCart.rejected, (state, action) => {

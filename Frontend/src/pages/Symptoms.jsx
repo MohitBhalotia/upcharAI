@@ -72,7 +72,7 @@ const Symptoms = () => {
             {selectedSymptoms.map((symptom, index) => (
               <span
                 key={index}
-                className="bg-blue-600 text-white px-4 py-2 rounded-full cursor-pointer"
+                className="bg-[#01C38E] text-white px-4 py-2 rounded-full cursor-pointer"
                 onClick={() => toggleSymptom({ English: symptom })}
               >
                 {symptom} ✕
@@ -87,7 +87,7 @@ const Symptoms = () => {
                 key={index}
                 className={`border px-4 py-2 rounded-full cursor-pointer hover:bg-gray-200 ${
                   selectedSymptoms.includes(symptom.English)
-                    ? "bg-blue-500 text-white"
+                    ? "bg-[#01C38E] text-white"
                     : ""
                 }`}
                 onClick={() => toggleSymptom(symptom)}
@@ -100,7 +100,7 @@ const Symptoms = () => {
           <div className="mt-6">
             <button
               onClick={handleSubmit}
-              className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600"
+              className="bg-[#024E56] text-white px-6 py-3 rounded-lg w-full hover:bg-[#132D46]"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit Symptoms"}

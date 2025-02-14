@@ -39,7 +39,6 @@ const MedicineCard = ({ medicine }) => {
     if (quantityDifference !== 0) {
       dispatch(addToCart({ medicineId: _id, quantity: quantityDifference }));
       setIsQuantityChanged(false); // Reset confirmation state
-      alert("Cart updated!");
     }
   };
 

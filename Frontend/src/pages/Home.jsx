@@ -20,7 +20,7 @@ const Home = () => {
   };
 
   return (
-    <div className=" bg-gray-50 px-8 py-4">
+    <div className="px-8 py-4">
       {/* Button Section */}
       <div className="flex justify-center items-center">
         <div className="flex justify-center w-md min-w-120 flex-col gap-8 bg-gray-50 p-4 rounded-2xl">

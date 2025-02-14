@@ -23,7 +23,7 @@ export default function Protected({ children, authentication = true }) {
       </h1>
     </div>
   ) : (
-    <div className="min-h-[600px]  py-6 sm:px-4 lg:px-8">
+    <div className="  py-6 sm:px-4 lg:px-8">
       {children}
     </div>
   );

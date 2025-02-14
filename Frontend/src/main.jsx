@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import routes from "./routes/Routes.jsx";
 import ScrollToTop from "./pages/ScrollToTop.jsx";
-
+import { ToastContainer } from 'react-toastify';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +16,7 @@ const router = createBrowserRouter([
       <>
         <ScrollToTop />
         <App />
+        <ToastContainer position="top-center"/>
       </>
     ),
     children: routes,
