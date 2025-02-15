@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import symptoms from "../symptoms.json";
+import ReactMarkdown from "react-markdown";
 
 const Symptoms = () => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
@@ -28,15 +29,13 @@ const Symptoms = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:8008/predict-via-symptoms",
+      const res = await axios.post(
+        "https://upchar-ai-symptoms.vercel.app/predict-via-symptoms",
         { symptoms: selectedSymptoms }
       );
-      setResponse(response.data);
+      setResponse(res.data);
     } catch (error) {
-      setResponse(
-        "No diseases found matching all given symptoms in our database."
-      );
+      setResponse("No diseases found matching all given symptoms in our database.");
     } finally {
       setLoading(false);
     }
@@ -100,33 +99,38 @@ const Symptoms = () => {
           </div>
         </>
       ) : (
-        <div className="mt-6 grid grid-cols-1 gap-4">
+        <div className="mt-6">
           {Array.isArray(response) ? (
             response.map((disease, index) => (
               <div
                 key={index}
-                className="p-4 bg-gray-100 border border-gray-300 rounded-lg"
+                className="p-4 bg-gray-100 border border-gray-300 rounded-lg mb-4"
               >
                 <h3 className="text-lg font-semibold">
                   {Object.keys(disease)[0]}
                 </h3>
-                <p className="mt-2">{disease[Object.keys(disease)[0]]}</p>
+                <ReactMarkdown className="mt-2">
+                  {disease[Object.keys(disease)[0]]}
+                </ReactMarkdown>
                 <p className="mt-2 font-medium">
-                  Category: {disease.Category.join(", ")}
+                  Category: {disease.Category ? disease.Category.join(", ") : "N/A"}
                 </p>
               </div>
             ))
           ) : (
-            <p>{response}</p>
+            <ReactMarkdown>{response}</ReactMarkdown>
           )}
           <div className="mt-4 flex gap-4">
             <button
               onClick={handleTryAgain}
-              className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-gray-600"
+              className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600"
             >
               Go Back
             </button>
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full hover:bg-gray-600">
+            <button
+              onClick={() => window.print()}
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full hover:bg-blue-600"
+            >
               Print
             </button>
           </div>
