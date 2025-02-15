@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const token = useSelector((state) => state.auth.token);
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${backendUrl}/order/all-orders`,{
-            headers:{Authorization: `Bearer ${token}`}
+        const response = await axios.get(`${backendUrl}/order/all-orders`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         console.log(response);
         setOrders(response.data.orders);
       } catch (error) {
-        console.error('Failed to fetch orders:', error);
+        console.error("Failed to fetch orders:", error);
       }
     };
     fetchOrders();
@@ -27,16 +28,27 @@ const Orders = () => {
         <p>No orders found.</p>
       ) : (
         <ul className="space-y-4">
-          {orders.map(order => (
+          {orders.map((order) => (
             <li key={order._id} className="bg-white p-4 rounded-lg shadow-md">
-              <p><strong>Order ID:</strong> {order._id}</p>
-              <p><strong>Customer:</strong> {order.userId.name}</p>
-              <p><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
-              <p><strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+              <p>
+                <strong>Order ID:</strong> {order._id}
+              </p>
+              <p>
+                <strong>Customer:</strong> {order.userId.name}
+              </p>
+              <p>
+                <strong>Total Amount:</strong> ₹{order.totalAmount}
+              </p>
+              <p>
+                <strong>Date:</strong>{" "}
+                {new Date(order.createdAt).toLocaleString()}
+              </p>
               <h3 className="font-semibold mt-2">Items:</h3>
               <ul className="list-disc list-inside">
-                {order.items.map(item => (
-                  <li key={item._id}>{item.name} - {item.quantity} pcs (₹{item.cost})</li>
+                {order.items.map((item) => (
+                  <li key={item._id}>
+                    {item.name} - {item.quantity} pcs (₹{item.cost})
+                  </li>
                 ))}
               </ul>
             </li>

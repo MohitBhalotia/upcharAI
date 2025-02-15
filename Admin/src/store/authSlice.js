@@ -7,9 +7,6 @@ const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
 // Load auth state from localStorage
 const storedToken = localStorage.getItem("token") || null;
-const storedUserId = storedToken ? jwtDecode(storedToken).userId : null; // Decode userId from token
-
-// Login with QR Code
 
 export const loginWithNumber = createAsyncThunk(
   "auth/loginWithNumber",
@@ -20,25 +17,22 @@ export const loginWithNumber = createAsyncThunk(
       });
 
       const token = response.data.token;
-      const decodedToken = jwtDecode(token); // Decode JWT to extract userId
-      const userId = decodedToken.userId;
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
 
-      // Save userId and token to localStorage
-      localStorage.setItem("userId", userId);
+      if (role !== "Admin") {
+        return rejectWithValue("Access denied: Not an admin");
+      }
+
       localStorage.setItem("token", token);
-
-      return { userId, token };
+      return { token };
     } catch (error) {
       return rejectWithValue(error.response?.data?.msg || "Abha login failed");
     }
   }
 );
 
-// Fetch user details
-
 const initialState = {
-  user: null,
-  userId: storedUserId,
   token: storedToken,
   loading: false,
   error: null,
@@ -49,26 +43,20 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
-      state.userId = null;
       state.token = null;
-
-      // Clear localStorage
-      localStorage.removeItem("userId");
       localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
     builder
-      // Handle loginWithQr
       .addCase(loginWithNumber.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(loginWithNumber.fulfilled, (state, action) => {
-        state.userId = action.payload.userId;
         state.token = action.payload.token;
-        toast.success("Login successfull");
+        localStorage.setItem("token", action.payload.token);
+        toast.success("Login successful");
         state.loading = false;
       })
       .addCase(loginWithNumber.rejected, (state, action) => {
@@ -76,8 +64,6 @@ const authSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload);
       });
-
-    // Handle getUser
   },
 });
 

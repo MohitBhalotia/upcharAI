@@ -40,6 +40,7 @@ const reqMed = async (req, res) => {
     const newRequest = {
       mediName,
       quantity,
+      userId: userID,
     };
 
     user.requestedMedicine.push(newRequest);
@@ -67,6 +68,7 @@ const getAllReqMed = async (req, res) => {
     // Flatten the result to create a single list of requested medicines
     const allRequestedMedicines = users.flatMap((user) => {
       return user.requestedMedicine.map((medicine) => ({
+        userId:user._id,
         userName: user.name,
         mediName: medicine.mediName,
         quantity: medicine.quantity,
@@ -89,7 +91,7 @@ const getAllReqMed = async (req, res) => {
 
 // Controller to get user's requested medicines
 const getMyReqMed = async (req, res) => {
-  const userId  = req.user.userId;
+  const userId = req.user.userId;
 
   try {
     const user = await User.findById(userId);
