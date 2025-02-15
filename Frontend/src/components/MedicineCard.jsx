@@ -4,8 +4,8 @@ import { getCart, addToCart } from "../store/slices/cartSlice";
 import { useNavigate } from "react-router-dom"; // For navigating to cart
 
 const MedicineCard = ({ medicine }) => {
-  const { _id, name, image, price, subsidized_price, quantity, description } =
-    medicine;
+  const { _id, name, image, price, quantity, description } = medicine;
+
   const dispatch = useDispatch();
   const navigate = useNavigate(); // To navigate to cart page
   const [cartQuantity, setCartQuantity] = useState(1);
@@ -17,9 +17,6 @@ const MedicineCard = ({ medicine }) => {
   const cartLoading = useSelector((state) => state.cart.loading);
 
   // Fetch cart when component mounts
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
 
   // Find the existing quantity of the current medicine in the cart
   const cartItem = cart.find((item) => item.medicineId === _id);
@@ -65,9 +62,7 @@ const MedicineCard = ({ medicine }) => {
           Available: {quantity}
         </p>
 
-        <p className="text-sm  text-gray-600 line-clamp-1">
-          {description}
-        </p>
+        <p className="text-sm  text-gray-600 line-clamp-1">{description}</p>
 
         <div>
           <p className="text-sm text-gray-500">Price</p>
@@ -77,7 +72,7 @@ const MedicineCard = ({ medicine }) => {
                 <span className="line-through text-red-500 text-lg">
                   ₹{price}
                 </span>
-                <span className="text-green-600 ml-2">₹{subsidized_price}</span>
+                <span className="text-green-600 ml-2">₹{medicine.subsidized_price}</span>
               </>
             ) : (
               <> ₹{price} </>

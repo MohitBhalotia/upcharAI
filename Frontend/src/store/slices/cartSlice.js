@@ -50,7 +50,6 @@ export const updateCart = createAsyncThunk(
   async ({ medicineId, quantity }, { getState, rejectWithValue }) => {
     try {
       const userId = getState().auth.userId || adminId;
-
       await axios.patch(`${backendUrl}/cart/update-cart?userId=${userId}`, {
         medicineId,
         quantity,
@@ -70,7 +69,6 @@ export const removeFromCart = createAsyncThunk(
   async (medicineId, { getState, rejectWithValue }) => {
     try {
       const userId = getState().auth.userId || adminId;
-
       await axios.delete(
         `${backendUrl}/cart/remove-from-cart/${medicineId}?userId=${userId}`
       );
@@ -171,8 +169,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(clearCart.fulfilled, (state, action) => {
-        state.cartItems = action.payload;
+      .addCase(clearCart.fulfilled, (state) => {
+        state.cartItems = [];
         state.cartLength = 0;
         state.loading = false;
       });

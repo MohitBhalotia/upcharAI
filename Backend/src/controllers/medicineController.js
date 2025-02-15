@@ -2,7 +2,6 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const cloudinary = require("cloudinary").v2;
 const Medicine = require("../models/medicineModel");
-const User = require("../models/UserModel");
 
 const getMedicines = async (req, res) => {
   const { userId } = req.query; // Destructure userId from request body

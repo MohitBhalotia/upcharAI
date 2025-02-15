@@ -35,7 +35,7 @@ export const buyMedicine = createAsyncThunk(
   "medi/buyMedicine",
   async ({ cart }, { getState, rejectWithValue }) => {
     try {
-      const userId = getState().auth.userId||import.meta.env.VITE_ADMIN_ID;
+      const userId = getState().auth.userId || import.meta.env.VITE_ADMIN_ID;
 
       const response = await axios.post(
         `${backendUrl}/medicines/buy-medicine`,
@@ -70,6 +70,7 @@ const mediSlice = createSlice({
         state.error = null;
       })
       .addCase(getMedicines.fulfilled, (state, action) => {
+
         state.loading = false;
         state.medicines = action.payload;
       })
