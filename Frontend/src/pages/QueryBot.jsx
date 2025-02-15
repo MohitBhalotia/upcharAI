@@ -23,7 +23,7 @@ const QueryBot = () => {
     setIsTyping(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/chat", {
+      const res = await axios.post(`${backendUrl}/chat-bot/query`, {
         message: newMessage.text,
         session_id: "user123",
       });

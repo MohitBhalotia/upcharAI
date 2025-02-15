@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const chatbotSchema = new mongoose.Schema(
@@ -30,6 +29,15 @@ const drugsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const appointmentSchema = new mongoose.Schema(
+  {
+    doctorName: { type: String, required: true },
+    date: { type: String, required: true },
+    status: { type: String, default: "Scheduled" },
+  },
+  { timestamps: true }
+);
+
 const UserSchema = new mongoose.Schema(
   {
     hidn: { type: String, required: true, unique: true }, // National ID (Encrypted)
@@ -50,11 +58,22 @@ const UserSchema = new mongoose.Schema(
         amount: { type: Number, required: true },
       },
     ],
+    requestedMedicine: [
+      {
+        mediName: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    appointments: [appointmentSchema], // Array of appointments
   },
   { timestamps: true }
 );
-
-
 
 UserSchema.methods.createAccessToken = function () {
   const token = jwt.sign(

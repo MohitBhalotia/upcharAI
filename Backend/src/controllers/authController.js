@@ -1,6 +1,7 @@
 const User = require("../models/UserModel");
-const { NotFoundError, BadRequestError } = require("../errors");
+const { NotFoundError, BadRequestError,UnauthenticatedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
+const jwt=require('jsonwebtoken')
 
 const loginWithQr = async (req, res) => {
   const {
@@ -87,4 +88,19 @@ const getUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user });
 };
 
-module.exports = { loginWithQr, getUser, loginwithAbha };
+const adminLogin = async (req, res) => {
+  const { number } = req.body;
+  if (!number) {
+    throw new BadRequestError("Please enter admin Number");
+  }
+  if (number === process.env.ADMIN_NUMBER) {
+    const token = jwt.sign({ role: "Admin" }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.status(StatusCodes.OK).json({msg:"Login Successful", token });
+  } else {
+    throw new UnauthenticatedError("Invalid admin credentials");
+  }
+};
+
+module.exports = { loginWithQr, getUser, loginwithAbha,adminLogin };

@@ -27,19 +27,21 @@ const Dispensary = () => {
     }
 
     try {
-      const response = await axios.post(`${backendUrl}/orders/place-order`, {
+      const response = await axios.post(`${backendUrl}/orders/order-medicine`, {
         userId,
         medicineName,
         quantity,
       });
 
       if (response.status === 201) {
+        toast.success("Order placed successfully!");
         setIsModalOpen(false);
       } else {
         throw new Error("Order failed");
       }
     } catch (error) {
       console.error("Error placing order:", error);
+      toast.error("Failed to place order. Please try again.");
     }
   };
 
@@ -49,14 +51,14 @@ const Dispensary = () => {
       {userId ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className="absolute  top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700"
+          className="absolute top-4 right-4 bg-[#01C38E] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#009B71]"
         >
           Order Medicine
         </button>
       ) : null}
 
       {/* Heading */}
-      <h1 className="text-[#024E56] text-3xl font-extrabold text-center mb-4">
+      <h1 className="text-[#024E56] text-2xl font-extrabold text-center mb-4">
         Our Medicines
       </h1>
 
@@ -92,8 +94,8 @@ const Dispensary = () => {
       {/* Order Medicine Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-30">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
+          <div className="bg-white p-8 rounded-[24px] shadow-[0_12_0_32px_rgba(1,195,142,0.24)] w-96">
+            <h2 className="text-xl font-bold text-[#132D46] text-center mb-4">
               Order Medicine
             </h2>
 
@@ -105,7 +107,7 @@ const Dispensary = () => {
               value={medicineName}
               onChange={(e) => setMedicineName(e.target.value)}
               placeholder="Enter medicine name"
-              className="w-full p-2 border rounded-md mt-1"
+              className="w-full p-3 border border-gray-300 focus:border-[#01C38E] focus:ring-0 outline-none rounded-md mt-1"
             />
 
             <label className="block text-gray-700 font-semibold mt-4">
@@ -116,20 +118,20 @@ const Dispensary = () => {
               value={quantity}
               min="1"
               onChange={(e) => setQuantity(parseInt(e.target.value))}
-              className="w-full p-2 border rounded-md mt-1"
+              className="w-full p-3 border border-gray-300 focus:border-[#01C38E] focus:ring-0 outline-none rounded-md mt-1"
             />
 
             {/* Buttons */}
-            <div className="mt-4 flex justify-between">
+            <div className="mt-6 flex justify-center gap-4">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                className="bg-gray-400 text-white px-4 py-2 rounded-[12px] w-32 hover:bg-gray-500"
               >
                 Cancel
               </button>
               <button
                 onClick={handleOrder}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                className="bg-[#01C38E] text-white px-4 py-2 rounded-[12px] w-32 hover:bg-[#009B71]"
               >
                 Order
               </button>

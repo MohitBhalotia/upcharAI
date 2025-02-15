@@ -2,44 +2,27 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Medicine = require("../models/medicineModel");
 const User = require("../models/UserModel");
+const Order = require("../models/OrderModel");
 
-const getMedicines = async (req, res) => {
-  const { userId } = req.query; // Destructure userId from request body
-  let medicines = await Medicine.find();
-
-  // If userId is not provided, remove subsidized_price from each medicine
-
-  if (userId === process.env.ADMIN_ID) {
-    medicines = medicines.map((medicine) => {
-      const { subsidized_price, ...medicineWithoutSubsidy } =
-        medicine.toObject();
-      return medicineWithoutSubsidy;
-    });
-  }
-  res.status(StatusCodes.OK).json({ medicines });
-};
-
+// Buy Medicine and Create Order
 const buyMedicine = async (req, res) => {
   const { cart, userId } = req.body;
   if (!userId) {
     throw new BadRequestError("User Id is required");
   }
-  let user = (await User.findById(userId)) ;
+  const user = await User.findById(userId);
 
-  if (!userId) {
-    throw new NotFoundError("User not required");
+  if (!user) {
+    throw new NotFoundError("User not found");
   }
 
   if (!cart || cart.length === 0) {
     throw new BadRequestError("Cart cannot be empty");
   }
 
-  // Fetch user
-
   let totalBill = 0;
   const purchasedItems = [];
 
-  // Process each medicine in the cart
   for (let item of cart) {
     const { medicineId, quantity } = item;
 
@@ -58,15 +41,12 @@ const buyMedicine = async (req, res) => {
       );
     }
 
-    // Calculate cost for the full cart
-
     const medicine_cost =
       user._id.toString() !== process.env.ADMIN_ID
         ? medicine.subsidized_price * quantity
         : medicine.price * quantity;
     totalBill += medicine_cost;
 
-    // Store medicine details
     purchasedItems.push({
       medicineId,
       name: medicine.name,
@@ -74,21 +54,26 @@ const buyMedicine = async (req, res) => {
       cost: medicine_cost,
     });
 
-    // Deduct quantity from stock
     await Medicine.findByIdAndUpdate(medicineId, {
       $inc: { quantity: -quantity },
     });
   }
 
-  // Store total cart transaction in user's history
-  if (user) {
-    user.medicine_history.push({
-      drugs: purchasedItems, // Store full list of medicines
-      amount: totalBill, // Store total cart amount
-    });
+  const order = new Order({
+    userId,
+    items: purchasedItems,
+    totalAmount: totalBill,
+    createdAt: new Date(),
+  });
 
-    await user.save();
-  }
+  await order.save();
+
+  user.medicine_history.push({
+    drugs: purchasedItems,
+    amount: totalBill,
+  });
+
+  await user.save();
 
   res.status(StatusCodes.OK).json({
     msg: `${
@@ -96,7 +81,25 @@ const buyMedicine = async (req, res) => {
     } purchased medicines successfully. Total bill: ₹${totalBill}`,
     totalBill,
     purchasedItems,
+    orderId: order._id,
   });
 };
 
-module.exports = { getMedicines, buyMedicine };
+// Get All Orders (Admin)
+const getAllOrders = async (req, res) => {
+  const orders = await Order.find().populate("userId", "name email");
+  res.status(StatusCodes.OK).json({ orders });
+};
+
+// Get My Orders (User)
+const getMyOrders = async (req, res) => {
+  const userId = req.user.userId;
+  const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+  res.status(StatusCodes.OK).json({ orders });
+};
+
+module.exports = {
+  buyMedicine,
+  getAllOrders,
+  getMyOrders,
+};
