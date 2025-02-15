@@ -64,17 +64,17 @@ async def chat(request: ChatRequest):
         output = chat_completion.choices[0].message.content
 
         # Translate response to Hindi using Devnagri API
-        payload = {
-            "key": DEVNAG_API,
-            "sentence": output,
-            "src_lang": "en",
-            "dest_lang": "hi"
-        }
-        translation_response = requests.post(TRANSLATION_URL, data=payload)
-        if translation_response.status_code == 200:
-            translated_text = translation_response.json().get('translated_text', "Translation error")
-        else:
-            translated_text = "Translation service is currently unavailable."
+        # payload = {
+        #     "key": DEVNAG_API,
+        #     "sentence": output,
+        #     "src_lang": "en",
+        #     "dest_lang": "hi"
+        # # }
+        # translation_response = requests.post(TRANSLATION_URL, data=payload)
+        # if translation_response.status_code == 200:
+        #     translated_text = translation_response.json().get('translated_text', "Translation error")
+        # else:
+        #     translated_text = "Translation service is currently unavailable."
 
         # Generate a summary of the response (optional)
         summary_response = client.chat.completions.create(
@@ -91,7 +91,7 @@ async def chat(request: ChatRequest):
         memory.append(summary)
         chat_histories[session_id] = memory
 
-        return {"translated_response": translated_text, "summary": summary,"memory":memory}
+        return {"translated_response": output, "summary": summary,"memory":memory}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
@@ -99,7 +99,7 @@ async def chat(request: ChatRequest):
 # Enable CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://localhost:5174","http://localhost:5175"],  # Adjust based on frontend URL
+    allow_origins=["http://localhost:5173"],  # Adjust based on frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
