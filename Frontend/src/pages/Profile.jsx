@@ -40,7 +40,7 @@ const Profile = () => {
     },
     {
       path: "my-requests",
-      label: "My Requested Medicines",
+      label: "My Requests",
       icon: reqmed,
       iconSelect: reqmedSelect,
     },
