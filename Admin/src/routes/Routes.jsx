@@ -6,7 +6,6 @@ import Orders from "../pages/Orders";
 import Requests from "../pages/Requests";
 import Medicines from "../pages/Medicines";
 import Dashboard from "../pages/Dashboard";
-import Appointments from "../pages/Appointments";
 
 const PrivateRoute = ({ children }) => (
   <AuthLayout authentication={true}>{children}</AuthLayout>
@@ -57,14 +56,7 @@ const routes = [
       </PrivateRoute>
     ),
   },
-  {
-    path: "/appointments",
-    element: (
-      <PrivateRoute>
-        <Appointments />
-      </PrivateRoute>
-    ),
-  },
+
   {
     path: "/requests",
     element: (
