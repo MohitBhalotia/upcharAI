@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import symptoms from "../symptoms.json";
+import ReactMarkdown from "react-markdown";
 
 const Symptoms = () => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
@@ -110,14 +111,17 @@ const Symptoms = () => {
                 <h3 className="text-lg font-semibold">
                   {Object.keys(disease)[0]}
                 </h3>
-                <p className="mt-2">{disease[Object.keys(disease)[0]]}</p>
+                <ReactMarkdown className="mt-2">
+                  {disease[Object.keys(disease)[0]]}
+                </ReactMarkdown>
                 <p className="mt-2 font-medium">
-                  Category: {disease.Category.join(", ")}
+                  Category:{" "}
+                  {disease.Category ? disease.Category.join(", ") : "N/A"}
                 </p>
               </div>
             ))
           ) : (
-            <p>{response}</p>
+            <ReactMarkdown>{response}</ReactMarkdown>
           )}
           <div className="mt-4 flex gap-4">
             <button
