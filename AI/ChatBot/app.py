@@ -50,7 +50,7 @@ async def chat(request: ChatRequest):
     # Construct the LLM prompt using memory
     query = request.message
     messages = [{"role": "user", 
-                "content": f"{query}, respond as a knowledgeable and friendly doctor in 5-6 lines, and questions. Use '*' to **bold** important details. No extra text."
+                "content": f"{query}, respond as a knowledgeable and friendly doctor but dont write *doctor* in 5-6 lines, and 1-2 question to make conversation continuos. Use '*' to **bold** important details. No extra text."
 }]
     
     if memory:

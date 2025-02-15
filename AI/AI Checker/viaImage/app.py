@@ -20,10 +20,12 @@ app.add_middleware(
 )
 
 # Load the model
-model = load_model("./model.h5", compile=False)
+model_path = os.path.abspath("AI/AI Checker/viaImage/model.h5")
+print(f"Trying to load model from: {model_path}")
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model file not found at {model_path}")
+model = load_model(model_path, compile=False)
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-print("Model Loaded Successfully!")  # Debugging line
-
 # Allowed formats
 ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png"}
 
@@ -92,7 +94,6 @@ async def predict_image(file: UploadFile = File(...)):
         return JSONResponse(content={"prediction": f"{prediction['disease']} with {prediction['confidence']}% confidence"})
     except Exception as e:
         return JSONResponse(content={"error": f"Internal Server Error: {str(e)}"}, status_code=500)
-
 # Run FastAPI Server
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=6000)
