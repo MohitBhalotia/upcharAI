@@ -12,7 +12,7 @@ const chatController = async (req, res) => {
   }
 
   // Send POST request to the chatbot API
-  const response = await axios.post("http://localhost:8000/chat", {
+  const response = await axios.post("https://upchar-ai-chat.vercel.app/chat", {
     message,
     session_id,
   });

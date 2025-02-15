@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+neo4j
+groq
+python-dotenv
