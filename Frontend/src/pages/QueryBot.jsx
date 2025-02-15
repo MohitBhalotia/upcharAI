@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import ReactMarkdown from 'react-markdown';
 import aiBot from "../../public/images/aiBot.svg";
 import send from "../../public/images/send.svg";
 
@@ -64,7 +65,7 @@ const QueryBot = () => {
                   : "bg-gray-400 self-start mr-auto"
               }`}
             >
-              {msg.text}
+              {msg.sender === "ai" ? <ReactMarkdown>{msg.text}</ReactMarkdown> : msg.text}
             </div>
           ))}
           {isTyping && (

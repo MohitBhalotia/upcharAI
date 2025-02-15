@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const backendUrl = import.meta.env.VITE_BACKEND_URI;
 const adminId = import.meta.env.VITE_ADMIN_ID;
 
-
 // Fetch cart items
 export const getCart = createAsyncThunk(
   "cart/getCart",
@@ -84,6 +83,21 @@ export const removeFromCart = createAsyncThunk(
   }
 );
 
+export const clearCart = createAsyncThunk(
+  "cart/clearCart",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const userId = getState().auth.userId || adminId;
+      await axios.delete(`${backendUrl}/cart/clear-cart?userId=${userId}`);
+      return [];
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.msg || "Failed to clear cart"
+      );
+    }
+  }
+);
+
 const initialState = {
   cartItems: [],
   cartLength: 0,
@@ -97,7 +111,6 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Cart
       .addCase(getCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -111,24 +124,20 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Add to Cart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        state.cartItems = action.payload.cart; // Add the new item correctly
+        state.cartItems = action.payload.cart;
         state.cartLength = state.cartItems.length;
-        toast.success('Medicine added to cart!')
+        toast.success("Medicine added to cart!");
         state.loading = false;
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Update Cart
       .addCase(updateCart.pending, (state) => {
         state.loading = true;
       })
@@ -140,15 +149,13 @@ const cartSlice = createSlice({
         if (item) {
           item.quantity = quantity;
         }
-        toast.success('Cart updated!')
+        toast.success("Cart updated!");
         state.loading = false;
       })
       .addCase(updateCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Remove from Cart
       .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
       })
@@ -157,12 +164,17 @@ const cartSlice = createSlice({
           (item) => item.medicineId !== action.payload
         );
         state.cartLength = state.cartItems.length;
-        toast.success('Medicine removed from cart')
+        toast.success("Medicine removed from cart");
         state.loading = false;
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(clearCart.fulfilled, (state, action) => {
+        state.cartItems = action.payload;
+        state.cartLength = 0;
+        state.loading = false;
       });
   },
 });

@@ -59,7 +59,7 @@ const getCart = async (req, res) => {
 
   if (userId) {
     // For logged-in users, fetch cart using userId
-     cart = (await Cart.findOne({ user: userId })) || [];
+    cart = (await Cart.findOne({ user: userId })) || [];
   }
   // Return the cart data
   return res.status(StatusCodes.OK).json(cart);
@@ -134,4 +134,25 @@ const removeFromCart = async (req, res) => {
   // Return the updated cart
   return res.status(StatusCodes.OK).json({ msg: "Item removed from cart" });
 };
-module.exports = { addToCart, getCart, updateCart, removeFromCart };
+
+const clearCart = async (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    throw new BadRequestError("UserId is required to clear the cart");
+  }
+
+  let userCart = await Cart.findOne({ user: userId });
+
+  if (!userCart) {
+    throw new NotFoundError("Cart not found for this user");
+  }
+
+  userCart.cart = []; // Clear all items in the cart
+
+  await userCart.save();
+
+  return res.status(StatusCodes.OK).json({ msg: "Cart cleared successfully" });
+};
+
+module.exports = { addToCart, getCart, updateCart, removeFromCart, clearCart };

@@ -20,6 +20,8 @@ import MyProfile from "../pages/Myprofile";
 import MyOrders from "../pages/MyOrders";
 import MyAppointments from "../pages/MyAppointments";
 import MyReqMed from "../pages/MyReqMed";
+import ImageAI from "../pages/ImageAI";
+import CheckoutPage from "../pages/Checkout";
 
 const PrivateRoute = ({ children }) => (
   <AuthLayout authentication={true}>{children}</AuthLayout>
@@ -130,7 +132,7 @@ const routes = [
     path: "/ai-checkup/via-image",
     element: (
       <PrivateRoute>
-        <Symptoms />
+        <ImageAI />
       </PrivateRoute>
     ),
   },
@@ -177,6 +179,10 @@ const routes = [
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckoutPage />,
   },
   {
     path: "*",
