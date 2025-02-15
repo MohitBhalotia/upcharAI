@@ -3,7 +3,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-import ScrollToTop from "./pages/scrollToTop.jsx";
+import ScrollToTop from "./pages/ScrollToTop.jsx";
 import store from "./store/store.js";
 import { ToastContainer } from "react-toastify";
 import routes from "./routes/Routes.jsx";
