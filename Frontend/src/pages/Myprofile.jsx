@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import personalUserIcon from "../../public/images/personalUser.svg";
 
 const UserProfile = () => {
   const [user, setUser] = useState({});
@@ -8,13 +9,8 @@ const UserProfile = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
   const token = useSelector((state) => state.auth.token);
 
-  // Memoized API call
   const getUser = useCallback(async () => {
-    if (!token) {
-      setError("Authentication token is missing.");
-      return;
-    }
-
+    if (!token) return setError("Authentication token is missing.");
     try {
       const response = await axios.get(`${backendUrl}/auth/get-user`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -34,26 +30,43 @@ const UserProfile = () => {
   const { name, gender, dob, hid, hidn, district_name, mobile, address } = user;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">User Profile</h1>
+    <div className="p-6 max-w-2xl mx-auto">
+      <h1 className="text-[#132D46] text-2xl font-extrabold text-center mb-4">
+        User Profile
+      </h1>
+      {error && <div className="mb-4 text-red-600 text-center">⚠ {error}</div>}
 
-      {error && (
-        <div className="mb-4 text-red-600 text-center">
-          ⚠️ {error}
+      <div className="bg-[#132D46] p-2 rounded-[24px] shadow-xl transition-all duration-300 hover:shadow-3xl hover:translate-y-2">
+        <div className="bg-white p-6 rounded-[16px] flex items-center mb-2">
+          <img
+            src={personalUserIcon}
+            alt="Personal Information Icon"
+            className="w-8 h-8 mr-2"
+          />
+          <h2 className="text-[#132D46] text-xl font-semibold">
+            Personal Information
+          </h2>
         </div>
-      )}
-
-      <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all">
-        <h2 className="text-xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
-        <div className="space-y-2">
-          <p><strong>Name:</strong> {name || "N/A"}</p>
-          <p><strong>Gender:</strong> {gender === "M" ? "Male" : gender === "F" ? "Female" : "N/A"}</p>
-          <p><strong>Date of Birth:</strong> {dob || "N/A"}</p>
-          <p><strong>District:</strong> {district_name || "N/A"}</p>
-          <p><strong>Mobile:</strong> {mobile || "N/A"}</p>
-          <p><strong>Address:</strong> {address || "N/A"}</p>
-          <p><strong>HID:</strong> {hid || "N/A"}</p>
-          <p><strong>HIDN:</strong> {hidn || "N/A"}</p>
+        <div className="bg-white p-6 rounded-[18px]">
+          <div className="space-y-2">
+            {[
+              ["Name", name],
+              [
+                "Gender",
+                gender === "M" ? "Male" : gender === "F" ? "Female" : "N/A",
+              ],
+              ["Date of Birth", dob],
+              ["District", district_name],
+              ["Mobile", mobile],
+              ["Address", address],
+              ["HID", hid],
+              ["HIDN", hidn],
+            ].map(([label, value], index) => (
+              <p key={index} className="text-[#132D46] text-lg font-base">
+                <strong>{label}:</strong> {value || "N/A"}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import axios from "axios";
 const Dispensary = () => {
   const dispatch = useDispatch();
   const medicines = useSelector((state) => state.med.medicines) || [];
+  const token = useSelector((state) => state.auth.token);
   const userId = useSelector((state) => state.auth.userId);
   const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
@@ -26,11 +27,14 @@ const Dispensary = () => {
     }
 
     try {
-      const response = await axios.post(`${backendUrl}/orders/place-order`, {
-        userId,
-        medicineName,
-        quantity,
-      });
+      const response = await axios.post(
+        `${backendUrl}/req-medicines/req`,
+        {
+          mediName: medicineName,
+          quantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
       if (response.status === 201) {
         alert("Order placed successfully!");
@@ -52,7 +56,7 @@ const Dispensary = () => {
           onClick={() => setIsModalOpen(true)}
           className="absolute  top-4 right-4 bg-[#01C38E] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#009B71]"
         >
-          Order Medicine
+          Request Medicine
         </button>
       ) : null}
 
@@ -132,7 +136,7 @@ const Dispensary = () => {
                 onClick={handleOrder}
                 className="bg-[#01C38E] text-white px-4 py-2 rounded-[12px] w-32 hover:bg-[#009B71]"
               >
-                Order
+                Request
               </button>
             </div>
           </div>

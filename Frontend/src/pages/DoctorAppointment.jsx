@@ -55,7 +55,7 @@ const DoctorAppointment = () => {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12">
           {hospitals.length > 0 ? (
             hospitals.map((hospital) => (
-              <HospitalCard key={hospital._id} hospital={hospital} />
+              <HospitalCard key={hospital.place_id} hospital={hospital} />
             ))
           ) : (
             <p className="text-center text-gray-500 col-span-2">

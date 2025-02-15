@@ -3,45 +3,36 @@ import axios from "axios";
 import symptoms from "../symptoms.json";
 
 const Symptoms = () => {
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]); // Stores only English names
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [response, setResponse] = useState(null); // State to store the server response
-  const [loading, setLoading] = useState(false); // Loading state for the POST request
+  const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Filter the symptoms based on the search term
   const filteredSymptoms = symptoms
     .filter(
       (symptom) =>
         symptom.English.toLowerCase().includes(searchTerm.toLowerCase()) ||
         symptom.Hindi.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .slice(0, 20); // Limit to top 20 symptoms
+    .slice(0, 20);
 
   const toggleSymptom = (symptom) => {
-    // Check if the symptom is already selected
-    if (selectedSymptoms.includes(symptom.English)) {
-      // If already selected, remove it
-      setSelectedSymptoms(
-        selectedSymptoms.filter((s) => s !== symptom.English)
-      );
-    } else {
-      // If not selected, add it
-      setSelectedSymptoms([...selectedSymptoms, symptom.English]);
-    }
+    setSelectedSymptoms((prev) =>
+      prev.includes(symptom.English)
+        ? prev.filter((s) => s !== symptom.English)
+        : [...prev, symptom.English]
+    );
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      // Send only the English names of the selected symptoms
       const response = await axios.post(
         "http://localhost:8008/predict-via-symptoms",
         { symptoms: selectedSymptoms }
       );
-      setResponse(response.data[0]); // Store the response from the backend
+      setResponse(response.data);
     } catch (error) {
       setResponse(
         "No diseases found matching all given symptoms in our database."
@@ -51,11 +42,10 @@ const Symptoms = () => {
     }
   };
 
-  // Handle "Try Again" button click
   const handleTryAgain = () => {
-    setResponse(null); // Clear the response
-    setSelectedSymptoms([]); // Clear the selected symptoms
-    setSearchTerm(""); // Clear the search term
+    setResponse(null);
+    setSelectedSymptoms([]);
+    setSearchTerm("");
   };
 
   return (
@@ -63,11 +53,8 @@ const Symptoms = () => {
       <h2 className="text-3xl font-semibold mb-4 text-center">
         {response ? "Your Result" : "Select Your Symptoms"}
       </h2>
-
-      {/* If response is null (no prediction yet), show symptom selection */}
       {!response ? (
         <>
-          {/* Search Input */}
           <input
             type="text"
             placeholder="Search symptoms..."
@@ -75,8 +62,6 @@ const Symptoms = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
-          {/* Selected Symptoms Display */}
           <div className="flex flex-wrap gap-2 mb-4">
             {selectedSymptoms.map((symptom, index) => (
               <span
@@ -88,8 +73,6 @@ const Symptoms = () => {
               </span>
             ))}
           </div>
-
-          {/* Symptoms Selection List */}
           <h3 className="text-lg font-medium mb-2">Popular Symptoms</h3>
           <div className="flex flex-wrap gap-2">
             {filteredSymptoms.map((symptom, index) => (
@@ -106,8 +89,6 @@ const Symptoms = () => {
               </button>
             ))}
           </div>
-
-          {/* Submit Button */}
           <div className="mt-6">
             <button
               onClick={handleSubmit}
@@ -119,30 +100,25 @@ const Symptoms = () => {
           </div>
         </>
       ) : (
-        // Show the response once the symptoms are submitted
-        <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg">
-          {response?.disease && (
-            <h3 className="text-lg font-semibold">Predicted Disease:</h3>
+        <div className="mt-6 grid grid-cols-1 gap-4">
+          {Array.isArray(response) ? (
+            response.map((disease, index) => (
+              <div
+                key={index}
+                className="p-4 bg-gray-100 border border-gray-300 rounded-lg"
+              >
+                <h3 className="text-lg font-semibold">
+                  {Object.keys(disease)[0]}
+                </h3>
+                <p className="mt-2">{disease[Object.keys(disease)[0]]}</p>
+                <p className="mt-2 font-medium">
+                  Category: {disease.Category.join(", ")}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>{response}</p>
           )}
-          <p className="font-medium text-blue-600">
-            {response?.disease ? response?.disease : null}
-          </p>
-          {response.formatted_response && (
-            <h3 className="text-lg font-semibold mt-2">Details:</h3>
-          )}
-          <p
-            className={`${
-              !response.formatted_response
-                ? "text-center font-bold text-xl"
-                : ""
-            }`}
-          >
-            {response?.formatted_response
-              ? response.formatted_response
-              : response}
-          </p>
-
-          {/* "Try Again" button */}
           <div className="mt-4 flex gap-4">
             <button
               onClick={handleTryAgain}

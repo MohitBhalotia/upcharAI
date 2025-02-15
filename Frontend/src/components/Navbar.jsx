@@ -4,7 +4,7 @@ import CartIcon from "./CartIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/slices/authSlice";
-import ArrowLeftIcon from "../../public/images/arrow-left.svg";
+import ArrowLeftIcon from "../../public/images/backButton.svg";
 // Import images
 import upcharLogo from "../../public/images/upcharLogo.png";
 import userIcon from "../../public/images/user.png";
