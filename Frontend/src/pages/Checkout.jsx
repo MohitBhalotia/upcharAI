@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { clearCart } from "../store/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const CheckoutPage = () => {
       });
       setMessage(response.data.msg);
       dispatch(clearCart());
+      toast.success("Purchase successful");
       navigate("/dispensary");
     } catch (error) {
       console.error("Checkout Error:", error);
