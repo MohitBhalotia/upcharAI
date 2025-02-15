@@ -32,7 +32,10 @@ const drugsSchema = new mongoose.Schema(
 const appointmentSchema = new mongoose.Schema(
   {
     doctorName: { type: String, required: true },
+    hospitalName: { type: String, required: true },
     date: { type: String, required: true },
+    reason:{type:String,required:true},
+    address: { type: String, required: true },
     status: { type: String, default: "Scheduled" },
   },
   { timestamps: true }

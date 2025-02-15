@@ -44,11 +44,13 @@ const Navbar = () => {
           <img src={ArrowLeftIcon} className="w-6 h-6 md:w-8 md:h-8" />
         </button>
         {userId && (
-          <img
-            src={userIcon}
-            alt="User Icon"
-            className="w-6 h-6 md:w-8 md:h-8"
-          />
+          <Link to={"/profile"}>
+            <img
+              src={userIcon}
+              alt="User Icon"
+              className="w-6 h-6 md:w-8 md:h-8"
+            />
+          </Link>
         )}
         {location.pathname === "/dispensary" && (
           <Link to="/cart">

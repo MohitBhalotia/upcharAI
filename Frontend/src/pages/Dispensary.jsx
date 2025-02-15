@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMedicines } from "../store/slices/mediSlice";
 import Marquee from "react-fast-marquee";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const Dispensary = () => {
   const dispatch = useDispatch();
@@ -22,26 +21,26 @@ const Dispensary = () => {
 
   const handleOrder = async () => {
     if (!medicineName || quantity < 1) {
-      toast.warn("Please enter a valid medicine name and quantity.");
+      alert("Please enter a valid medicine name and quantity.");
       return;
     }
 
     try {
-      const response = await axios.post(`${backendUrl}/orders/order-medicine`, {
+      const response = await axios.post(`${backendUrl}/orders/place-order`, {
         userId,
         medicineName,
         quantity,
       });
 
       if (response.status === 201) {
-        toast.success("Order placed successfully!");
+        alert("Order placed successfully!");
         setIsModalOpen(false);
       } else {
         throw new Error("Order failed");
       }
     } catch (error) {
       console.error("Error placing order:", error);
-      toast.error("Failed to place order. Please try again.");
+      alert("Failed to place order. Please try again.");
     }
   };
 
@@ -51,14 +50,14 @@ const Dispensary = () => {
       {userId ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className="absolute top-4 right-4 bg-[#01C38E] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#009B71]"
+          className="absolute  top-4 right-4 bg-[#01C38E] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#009B71]"
         >
           Order Medicine
         </button>
       ) : null}
 
       {/* Heading */}
-      <h1 className="text-[#024E56] text-2xl font-extrabold text-center mb-4">
+      <h1 className="text-[#024E56] text-3xl font-extrabold text-center mb-4">
         Our Medicines
       </h1>
 

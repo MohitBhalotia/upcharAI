@@ -2,7 +2,7 @@ const User = require("../models/UserModel");
 
 // Controller for booking an appointment
 const bookAppointment = async (req, res) => {
-  const { date, doctorName, reason } = req.body;
+  const { date, doctorName, hospitalName, address, reason } = req.body;
 
   if (!date || !doctorName || !reason) {
     return res.status(400).json({ error: "All fields are required" });
@@ -20,6 +20,8 @@ const bookAppointment = async (req, res) => {
       date,
       doctorName,
       reason,
+      hospitalName,
+      address,
       bookedAt: new Date(),
     };
 

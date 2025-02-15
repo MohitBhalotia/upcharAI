@@ -15,6 +15,11 @@ import NotFound from "../pages/NotFound";
 
 import AuthLayout from "../Layout/AuthLayout";
 import LoginAbhaNumber from "../pages/LoginAbhaNumber";
+import Profile from "../pages/Profile";
+import MyProfile from "../pages/Myprofile";
+import MyOrders from "../pages/MyOrders";
+import MyAppointments from "../pages/MyAppointments";
+import MyReqMed from "../pages/MyReqMed";
 
 const PrivateRoute = ({ children }) => (
   <AuthLayout authentication={true}>{children}</AuthLayout>
@@ -126,6 +131,46 @@ const routes = [
     element: (
       <PrivateRoute>
         <Symptoms />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile/my-profile",
+    element: (
+      <PrivateRoute>
+        <MyProfile />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile/my-orders",
+    element: (
+      <PrivateRoute>
+        <MyOrders />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile/my-appointments",
+    element: (
+      <PrivateRoute>
+        <MyAppointments />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile/my-requests",
+    element: (
+      <PrivateRoute>
+        <MyReqMed />
       </PrivateRoute>
     ),
   },
