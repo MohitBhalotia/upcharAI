@@ -45,14 +45,14 @@ const QueryBot = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[#ffffff] p-6 min-h-[100vh]">
+    <div className="flex flex-col items-center justify-center bg-[#ffffff] p-6 ">
       <div className="w-full max-w-xl bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="p-4 border-b bg-[#01C38E] text-white text-xl font-semibold flex items-center">
           <img src={aiBot} alt="Medical AI" className="w-10 h-10 mr-2" />
           Medical AI Chatbot
         </div>
         <div
-          className="h-[470px] overflow-y-auto p-4 space-y-2"
+          className="h-[400px] overflow-y-auto p-4 space-y-2"
           ref={chatWindowRef}
         >
           {chat.map((msg, index) => (
