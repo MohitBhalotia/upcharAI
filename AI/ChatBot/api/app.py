@@ -100,7 +100,7 @@ async def chat(request: ChatRequest):
 # Enable CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Adjust based on frontend URL
+    allow_origins=["*"],  # Adjust based on frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
