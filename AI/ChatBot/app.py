@@ -49,7 +49,9 @@ async def chat(request: ChatRequest):
 
     # Construct the LLM prompt using memory
     query = request.message
-    messages = [{"role": "user", "content": F"{query}, answer this query as if you are a friendly well versed and a good doctor"}]
+    messages = [{"role": "user", 
+                "content": f"{query}, respond as a knowledgeable and friendly doctor in 5-6 lines, and questions. Use '*' to **bold** important details. No extra text."
+}]
     
     if memory:
         # Add previous context to the prompt if available
@@ -78,12 +80,11 @@ async def chat(request: ChatRequest):
 
         # Generate a summary of the response (optional)
         summary_response = client.chat.completions.create(
-            messages=[{
-                "role": "user",
-                "content": f"Summarize the following response '{output}' in less than 5 lines, keeping all key points. "
-                           f"Ensure questions, numbers, and critical information are retained. Just provide the summary with no additional text.",
+            messages = [{
+            "role": "user",
+            "content":  f"Summarize the following response '{output}' in less than 5 lines, keeping all key points. "
             }],
-            model="llama-3.3-70b-versatile",
+            model = "llama-3.3-70b-versatile"
         )
         summary = summary_response.choices[0].message.content
 
